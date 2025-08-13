@@ -121,12 +121,14 @@
                         </div>
                     </div>
 <div class="bg-white rounded-xl shadow border border-brown-100 overflow-hidden p-3 my-3">
-        <h3 class="text-lg font-semibold text-brown-800">Registration Details</h3>
+        <h2 class="text-lg font-semibold text-brown-800">Registration Details</h2>
 
 </div>
                     <!-- Registrations Table -->
-                    <div class="bg-white rounded-xl shadow border border-brown-100 overflow-hidden">
+                
+<div class="bg-white rounded-xl shadow border border-brown-100 overflow-hidden">
     <div class="px-4 sm:px-6 py-4 border-b border-brown-100 flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3">
+        <h3 class="text-lg font-semibold text-brown-800">Registration Details</h3>
         <form method="GET" class="flex flex-col sm:flex-row sm:items-center gap-3 w-full sm:w-auto">
             <div class="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
                 <div class="relative w-full sm:w-auto">
@@ -136,9 +138,9 @@
                 <div class="flex flex-wrap gap-2 w-full sm:w-auto">
                     <!-- Disability Category Dropdown -->
                     <select name="disability_filter" class="w-full sm:w-auto max-w-md pl-3 pr-8 py-2 border border-brown-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brown-500 focus:border-transparent bg-white text-sm">
-                        <option value="">All Disabilities</option>
+                        <option value="">All Categories</option>
                         @foreach($disability as $key => $value)
-                            <option value="{{$value}}" {{ request('disability_filter') == $key ? 'selected' : '' }}>{{$value}}</option>
+                            <option value="{{$value}}" {{ request('disability_filter') == $value ? 'selected' : '' }}>{{$value}}</option>
                         @endforeach
                     </select>
 
@@ -160,10 +162,16 @@
                     <i class="fas fa-times mr-1 sm:mr-2"></i> 
                     <span class="text-xs sm:text-sm">Clear</span>
                 </a>
-                <button type="button" onclick="exportToExcel()" class="bg-brown-600 hover:bg-brown-700 text-white px-3 py-2 rounded-lg flex items-center text-sm transition-colors whitespace-nowrap">
-                    <i class="fas fa-file-export mr-1 sm:mr-2"></i> 
-                    <span class="text-xs sm:text-sm">Export</span>
-                </button>
+
+
+                <button type="button" onclick="exportToExcel()" class="bg-green-600 hover:bg-green-700 text-white px-3 py-2 rounded-lg flex items-center text-sm transition-colors whitespace-nowrap">
+    <i class="fas fa-file-excel mr-1 sm:mr-2"></i> 
+    <span class="text-xs sm:text-sm">Excel</span>
+</button>
+                {{-- <button type="button" onclick="exportToExcel()" class="bg-green-600 hover:bg-green-700 text-white px-3 py-2 rounded-lg flex items-center text-sm transition-colors whitespace-nowrap">
+                    <i class="fas fa-file-excel mr-1 sm:mr-2"></i> 
+                    <span class="text-xs sm:text-sm">Excel</span>
+                </button> --}}
             </div>
         </form>
     </div>
@@ -224,10 +232,56 @@
 
     <div class="px-4 sm:px-6 py-4 border-t border-brown-100 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
         <div class="text-sm text-brown-500">
-            Showing <span class="font-medium">{{ $registrations->count() }}</span> results
+            Showing {{ $registrations->firstItem() }} to {{ $registrations->lastItem() }} of {{ $registrations->total() }} results
         </div>
         <div class="flex space-x-2 justify-center sm:justify-end">
-            <!-- You can add pagination here if needed -->
+            <!-- Custom Styled Pagination -->
+            @if ($registrations->hasPages())
+                <nav role="navigation" aria-label="Pagination Navigation" class="flex items-center justify-between">
+                    <div class="flex items-center gap-1">
+                        {{-- Previous Page Link --}}
+                        @if ($registrations->onFirstPage())
+                            <span class="px-3 py-1 rounded-md bg-brown-100 text-brown-400 cursor-not-allowed text-sm">
+                                Previous
+                            </span>
+                        @else
+                            <a href="{{ $registrations->previousPageUrl() }}" class="px-3 py-1 rounded-md bg-brown-100 text-brown-700 hover:bg-brown-200 transition-colors text-sm">
+                                Previous
+                            </a>
+                        @endif
+
+                        {{-- Pagination Elements --}}
+                        @foreach ($registrations->links()->elements as $element)
+                            {{-- "Three Dots" Separator --}}
+                            @if (is_string($element))
+                                <span class="px-3 py-1 rounded-md bg-brown-50 text-brown-500 text-sm">{{ $element }}</span>
+                            @endif
+
+                            {{-- Array Of Links --}}
+                            @if (is_array($element))
+                                @foreach ($element as $page => $url)
+                                    @if ($page == $registrations->currentPage())
+                                        <span class="px-3 py-1 rounded-md bg-brown-600 text-white text-sm">{{ $page }}</span>
+                                    @else
+                                        <a href="{{ $url }}" class="px-3 py-1 rounded-md bg-brown-100 text-brown-700 hover:bg-brown-200 transition-colors text-sm">{{ $page }}</a>
+                                    @endif
+                                @endforeach
+                            @endif
+                        @endforeach
+
+                        {{-- Next Page Link --}}
+                        @if ($registrations->hasMorePages())
+                            <a href="{{ $registrations->nextPageUrl() }}" class="px-3 py-1 rounded-md bg-brown-100 text-brown-700 hover:bg-brown-200 transition-colors text-sm">
+                                Next
+                            </a>
+                        @else
+                            <span class="px-3 py-1 rounded-md bg-brown-100 text-brown-400 cursor-not-allowed text-sm">
+                                Next
+                            </span>
+                        @endif
+                    </div>
+                </nav>
+            @endif
         </div>
     </div>
 </div>
@@ -242,6 +296,7 @@ function exportToExcel() {
     window.location.href = window.location.pathname + '?' + urlParams.toString();
 }
 </script>
+
                 </div>
             </main>
         </div>
