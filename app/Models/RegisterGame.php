@@ -10,6 +10,10 @@ class RegisterGame extends Model
         'registration_id',
         'game_id',
     ];
-
+// In your Registration model
+public function registerGames()
+{
+    return $this->hasMany(RegisterGame::class, 'registration_id');
+}
     
 }

@@ -120,42 +120,54 @@
                             </div>
                         </div>
                     </div>
+<div class="bg-white rounded-xl shadow border border-brown-100 overflow-hidden p-3 my-3">
+        <h3 class="text-lg font-semibold text-brown-800">Registration Details</h3>
 
+</div>
                     <!-- Registrations Table -->
                     <div class="bg-white rounded-xl shadow border border-brown-100 overflow-hidden">
     <div class="px-4 sm:px-6 py-4 border-b border-brown-100 flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3">
-        <h3 class="text-lg font-semibold text-brown-800">Registration Details</h3>
-        <div class="flex flex-col sm:flex-row sm:items-center gap-3 w-full sm:w-auto">
+        <form method="GET" class="flex flex-col sm:flex-row sm:items-center gap-3 w-full sm:w-auto">
             <div class="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
                 <div class="relative w-full sm:w-auto">
-                    <input type="text" placeholder="Search..." class="w-full sm:w-auto pl-10 pr-4 py-2 border border-brown-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brown-500 focus:border-transparent text-sm">
+                    <input type="text" name="search" placeholder="Search..." value="{{ request('search') }}" class="w-full sm:w-auto pl-10 pr-4 py-2 border border-brown-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brown-500 focus:border-transparent text-sm">
                     <i class="fas fa-search absolute left-3 top-3 text-brown-400 text-sm"></i>
                 </div>
                 <div class="flex flex-wrap gap-2 w-full sm:w-auto">
                     <!-- Disability Category Dropdown -->
-                    <select class="w-full sm:w-auto max-w-md pl-3 pr-8 py-2 border border-brown-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brown-500 focus:border-transparent bg-white text-sm">
-                        <option value="">All Categories</option>
+                    <select name="disability_filter" class="w-full sm:w-auto max-w-md pl-3 pr-8 py-2 border border-brown-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brown-500 focus:border-transparent bg-white text-sm">
+                        <option value="">All Disabilities</option>
                         @foreach($disability as $key => $value)
-                            <option value="{{$key}}">{{$value}}</option>
+                            <option value="{{$value}}" {{ request('disability_filter') == $key ? 'selected' : '' }}>{{$value}}</option>
                         @endforeach
                     </select>
 
                     <!-- Games Dropdown -->
-                    <select class="w-full sm:w-auto max-w-md pl-3 pr-8 py-2 border border-brown-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brown-500 focus:border-transparent bg-white text-sm">
+                    <select name="game_filter" class="w-full sm:w-auto max-w-md pl-3 pr-8 py-2 border border-brown-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brown-500 focus:border-transparent bg-white text-sm">
                         <option value="">All Games</option>
                         @foreach($game as $key => $value)
-                            <option value="{{$key}}">{{$value}}</option>
+                            <option value="{{$key}}" {{ request('game_filter') == $key ? 'selected' : '' }}>{{$value}}</option>
                         @endforeach
                     </select>
                 </div>
             </div>
-            <button class="bg-brown-600 hover:bg-brown-700 text-white px-3 py-2 rounded-lg flex items-center text-sm transition-colors whitespace-nowrap">
-                <i class="fas fa-file-export mr-1 sm:mr-2"></i> 
-                <span class="text-xs sm:text-sm">Export</span>
-            </button>
-        </div>
+            <div class="flex gap-2">
+                <button type="submit" class="bg-brown-600 hover:bg-brown-700 text-white px-3 py-2 rounded-lg flex items-center text-sm transition-colors whitespace-nowrap">
+                    <i class="fas fa-filter mr-1 sm:mr-2"></i> 
+                    <span class="text-xs sm:text-sm">Filter</span>
+                </button>
+                <a href="{{ request()->url() }}" class="bg-gray-500 hover:bg-gray-600 text-white px-3 py-2 rounded-lg flex items-center text-sm transition-colors whitespace-nowrap">
+                    <i class="fas fa-times mr-1 sm:mr-2"></i> 
+                    <span class="text-xs sm:text-sm">Clear</span>
+                </a>
+                <button type="button" onclick="exportToExcel()" class="bg-brown-600 hover:bg-brown-700 text-white px-3 py-2 rounded-lg flex items-center text-sm transition-colors whitespace-nowrap">
+                    <i class="fas fa-file-export mr-1 sm:mr-2"></i> 
+                    <span class="text-xs sm:text-sm">Export</span>
+                </button>
+            </div>
+        </form>
     </div>
-
+    
     <!-- Responsive Table -->
     <div class="overflow-x-auto">
         <table class="min-w-full divide-y divide-brown-200">
@@ -170,7 +182,7 @@
                 </tr>
             </thead>
             <tbody class="bg-white divide-y divide-brown-200">
-                @foreach($registrations as $index => $registration)
+                @forelse($registrations as $index => $registration)
                     <tr class="{{ $index % 2 === 1 ? 'bg-brown-50' : '' }}">
                         <td class="px-4 sm:px-6 py-4 whitespace-nowrap">
                             <div class="text-sm font-medium text-brown-900">{{ $registration->athlete_name }}</div>
@@ -199,25 +211,37 @@
                             </div>
                         </td>
                     </tr>
-                @endforeach
+                @empty
+                    <tr>
+                        <td colspan="6" class="px-4 sm:px-6 py-4 text-center text-sm text-brown-500">
+                            No registrations found.
+                        </td>
+                    </tr>
+                @endforelse
             </tbody>
         </table>
     </div>
 
     <div class="px-4 sm:px-6 py-4 border-t border-brown-100 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
         <div class="text-sm text-brown-500">
-            Showing <span class="font-medium">1</span> to <span class="font-medium">4</span> of <span class="font-medium">142</span> results
+            Showing <span class="font-medium">{{ $registrations->count() }}</span> results
         </div>
         <div class="flex space-x-2 justify-center sm:justify-end">
-            <button class="px-3 py-1 rounded-md bg-brown-100 text-brown-700 hover:bg-brown-200 transition-colors text-sm">
-                Previous
-            </button>
-            <button class="px-3 py-1 rounded-md bg-brown-600 text-white hover:bg-brown-700 transition-colors text-sm">
-                Next
-            </button>
+            <!-- You can add pagination here if needed -->
         </div>
     </div>
 </div>
+
+<script>
+function exportToExcel() {
+    // Get current URL parameters
+    const urlParams = new URLSearchParams(window.location.search);
+    urlParams.set('export', 'excel');
+    
+    // Redirect to the same page with export parameter
+    window.location.href = window.location.pathname + '?' + urlParams.toString();
+}
+</script>
                 </div>
             </main>
         </div>

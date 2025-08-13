@@ -14,7 +14,69 @@ class adminRegister extends Controller
 {
     //
 
+public function adminRegistrations(Request $request)
+{
+    // Get search query from request
+    $search = $request->get('search');
+    
+    // Get filter values
+    $disabilityFilter = $request->get('disability_filter');
+    $gameFilter = $request->get('game_filter');
+    
+    // Step 1: Get all registrations with optional search filtering
+    $registrationsQuery = Registration::orderBy('id', 'desc');
+    
+    // Apply search filter if provided
+    if ($search) {
+        $registrationsQuery->where(function($query) use ($search) {
+            $query->where('athlete_name', 'LIKE', "%{$search}%")
+                  ->orWhere('email', 'LIKE', "%{$search}%")
+                  ->orWhere('phone', 'LIKE', "%{$search}%");
+        });
+    }
+    
+    // Apply disability filter if provided
+    if ($disabilityFilter) {
+        $registrationsQuery->where('disability', 'LIKE', "%{$disabilityFilter}%");
+    }
+    
+    // Apply game filter if provided
+    if ($gameFilter) {
+        $registrationsQuery->whereHas('registerGames', function($query) use ($gameFilter) {
+            $query->where('game_id', $gameFilter);
+        });
+    }
+    
+    $registrations = $registrationsQuery->get();
+    
+    // Get filter options
+    $disability = Disability::pluck('disability_name','id');
+    $game = Game::pluck('game_name','id');
+    
+    // Step 2: Attach games & documents for each registration
+    foreach ($registrations as $registration) {
+        
+        // Get game names for this user through the register_game pivot table
+        $gameIds = RegisterGame::where('registration_id', $registration->id)
+                               ->pluck('game_id');
 
+        $games = Game::whereIn('id', $gameIds)->pluck('game_name')->toArray();
+
+        // Add games as comma separated string
+        $registration->games_list = implode(', ', $games);
+
+        // Get document paths for this user
+        $documents = Document::where('registration_id', $registration->id)->get();
+
+        // Prepare public URLs for documents
+        $registration->documents_list = $documents->map(function($doc) {
+            return asset('/' . $doc->document_path);
+        })->toArray();
+    }
+    
+    // Step 3: Pass data to the view
+    return view('main.admin', compact('registrations', 'disability', 'game', 'search', 'disabilityFilter', 'gameFilter'));
+}
 
     //working code before filtering
 // public function adminRegistrations()
