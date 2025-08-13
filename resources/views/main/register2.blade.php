@@ -1,0 +1,341 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Para Sports Registration</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brown: {
+                            50: '#faf6f2',
+                            100: '#f3ebe3',
+                            200: '#e4d3c3',
+                            300: '#d3b79d',
+                            400: '#b98e6c',
+                            500: '#8b5e34',
+                            600: '#734a27',
+                            700: '#5a3a20',
+                            800: '#422a19',
+                            900: '#2d1d12',
+                        }
+                    }
+                }
+            }
+        }
+
+    </script>
+    <style>
+        input[type="text"],
+        input[type="date"],
+        input[type="email"],
+        input[type="tel"],
+        select,
+        textarea {
+            outline: none;
+        }
+
+    </style>
+</head>
+<body class="min-h-screen bg-brown-50 text-brown-900">
+    @include('components.homepage.navbar')
+    <main class="max-w-5xl mx-auto p-4 sm:p-6 lg:p-8">
+        <section class="bg-white shadow-lg rounded-xl border border-brown-100 overflow-hidden">
+            <div class="bg-brown-700 text-white px-6 py-5">
+                <h1 class="text-2xl font-semibold">Para Sports Registration</h1>
+                <p class="text-brown-100 text-sm mt-1">Fill your basic information, choose one disability category, and up to three games.</p>
+            </div>
+            <form id="registrationForm" action="/register" method="POST" class="p-6" enctype="multipart/form-data">
+                <!-- CSRF token for Laravel -->
+                <input type="hidden" name="_token" value="{{ csrf_token() }}">
+
+
+                <fieldset class="space-y-6">
+          <legend class="text-xl font-semibold text-brown-800">Basic Information</legend>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+            <div>
+              <label class="block text-sm font-medium text-brown-700">Surname Name</label>
+              <input type="text" name="surname"  class="mt-1 w-full rounded-lg border border-brown-200 bg-brown-50/50 px-3 py-2 focus:ring-2 focus:ring-brown-400 focus:border-brown-400" placeholder="Enter surname" value="{{ old('surname') }}" />
+
+              @error('surname')
+                <p class="text-red-500 text-sm">{{ $message }}</p>
+              @enderror
+            </div>
+
+            <div>
+              <label class="block text-sm font-medium text-brown-700">Name of the Athlete</label>
+              <input type="text" name="athlete_name"  class="mt-1 w-full rounded-lg border border-brown-200 bg-brown-50/50 px-3 py-2 focus:ring-2 focus:ring-brown-400 focus:border-brown-400" placeholder="Enter full name" value="{{ old('athlete_name') }}" />
+
+              @error('athlete_name')
+                <p class="text-red-500 text-sm">{{ $message }}</p>
+              @enderror
+
+            </div>
+
+            <div>
+              <label class="block text-sm font-medium text-brown-700">Father’s Name</label>
+              <input type="text" name="father_name"  class="mt-1 w-full rounded-lg border border-brown-200 bg-brown-50/50 px-3 py-2 focus:ring-2 focus:ring-brown-400 focus:border-brown-400" placeholder="Enter father's name" value="{{ old('father_name') }}" />
+
+              @error('father_name')
+                <p class="text-red-500 text-sm">{{ $message }}</p>
+              @enderror
+            </div>
+
+            <div>
+              <label class="block text-sm font-medium text-brown-700">Date of Birth</label>
+              <input type="date" name="dob"  class="mt-1 w-full rounded-lg border border-brown-200 bg-brown-50/50 px-3 py-2 focus:ring-2 focus:ring-brown-400 focus:border-brown-400" value="{{ old('dob') }}" />
+
+              @error('dob')
+                <p class="text-red-500 text-sm">{{ $message }}</p>
+              @enderror
+
+            </div>
+
+            <div>
+              <label class="block text-sm font-medium text-brown-700">Male / Female</label>
+              <select name="gender"  class="mt-1 w-full rounded-lg border border-brown-200 bg-brown-50/50 px-3 py-2 focus:ring-2 focus:ring-brown-400 focus:border-brown-400">
+
+                <option value="" disabled selected>Select</option>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+                <option value="other">Other</option>
+                <option value="prefer_not_to_say">Prefer not to say</option>
+              </select>
+              @error('gender')
+                <p class="text-red-500 text-sm">{{ $message }}</p>
+              @enderror
+
+            </div>
+
+            <div>
+              <label class="block text-sm font-medium text-brown-700">Age Groups</label>
+              <select name="age_group"  class="mt-1 w-full rounded-lg border border-brown-200 bg-brown-50/50 px-3 py-2 focus:ring-2 focus:ring-brown-400 focus:border-brown-400">
+                <option value="" disabled selected>Select</option>
+                <option value="14">Under 14</option>
+                <option value="17">Under 17</option>
+                <option value="19">Under 19</option>
+                <option value="open">Open</option>
+                <option value="masters">Masters</option>
+              </select>
+              @error('age_group')
+                <p class="text-red-500 text-sm">{{ $message }}</p>
+              @enderror
+
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+            <div>
+              <label class="block text-sm font-medium text-brown-700">Full Postal Address</label>
+              <textarea name="address" rows="3"  class="mt-1 w-full rounded-lg border border-brown-200 bg-brown-50/50 px-3 py-2 focus:ring-2 focus:ring-brown-400 focus:border-brown-400" placeholder="Street, City, State, ZIP">{{ old('address') }}</textarea>
+
+              @error('address')
+                <p class="text-red-500 text-sm">{{ $message }}</p>
+              @enderror
+
+            </div>
+
+            <div class="grid grid-cols-1 gap-5">
+              <div>
+                <label class="block text-sm font-medium text-brown-700">Contact Number</label>
+                <input type="tel" name="phone"  pattern="[0-9+\-\s]{7,}" class="mt-1 w-full rounded-lg border border-brown-200 bg-brown-50/50 px-3 py-2 focus:ring-2 focus:ring-brown-400 focus:border-brown-400" placeholder="+1 234 567 890" value="{{ old('phone') }}" />
+
+                @error('phone')
+                <p class="text-red-500 text-sm">{{ $message }}</p>
+              @enderror
+
+              </div>
+
+              <div>
+                <label class="block text-sm font-medium text-brown-700">E-mail ID</label>
+                <input type="email" name="email"  class="mt-1 w-full rounded-lg border border-brown-200 bg-brown-50/50 px-3 py-2 focus:ring-2 focus:ring-brown-400 focus:border-brown-400" placeholder="name@example.com" value="{{ old('email') }}" />
+
+                @error('email')
+                <p class="text-red-500 text-sm">{{ $message }}</p>
+              @enderror
+
+              </div>
+            </div>
+          </div>
+          
+        </fieldset>
+
+          <hr class="my-3 border-brown-700">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                <div>
+                <label class="block text-sm font-medium text-brown-700">Percentage</label>
+                <input type="number" name="percentage" min="0" max="100" step="1"  class="mt-1 w-full rounded-lg border border-brown-200 bg-brown-50/50 px-3 py-2 focus:ring-2 focus:ring-brown-400 focus:border-brown-400" placeholder="0 - 100" value="{{ old('percentage') }}" />
+
+                @error('percentage')
+                <p class="text-red-500 text-sm">{{ $message }}</p>
+              @enderror
+
+                </div>
+            </div>
+        <hr class="my-3 border-brown-700">
+
+        <fieldset class="space-y-4">
+          <legend class="text-xl font-semibold text-brown-800">Disability Category (Select one)</legend>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+            <!-- Generate radio buttons -->
+            <!-- Columnized list -->
+            <label class="flex items-start gap-3 p-3 rounded-lg border border-brown-200 bg-brown-50/40 hover:bg-brown-100/40 cursor-pointer">
+              <input type="radio" name="disability" value="Blindness"  class="mt-1" />
+              <span>Blindness</span>
+            </label>
+
+
+
+            @foreach ($disabilities as $disability)
+            <label class="flex items-start gap-3 p-3 rounded-lg border border-brown-200 bg-brown-50/40 hover:bg-brown-100/40 cursor-pointer">
+              <input type="radio" name="disability" value="{{$disability}}" class="mt-1" />
+              <span>{{$disability}}</span>
+            </label>
+            @endforeach
+
+            
+          </div>
+           @error('disability')
+           <p class="text-red-500 text-sm">{{ $message }}</p>
+           @enderror
+
+        </fieldset>
+        <hr class="my-3 border-brown-700">
+
+        <fieldset class="space-y-4">
+          <legend class="text-xl font-semibold text-brown-800">Select Games (Up to 3)</legend>
+          <p class="text-sm text-brown-600">You can choose a maximum of three games. After three selections, the remaining options will be disabled.</p>
+
+          <div id="games-list" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+            <!-- Checkbox list -->
+
+            @foreach ($games as $key => $value)
+            <label class="flex items-start gap-3 p-3 rounded-lg border border-brown-200 bg-brown-50/40 hover:bg-brown-100/40 cursor-pointer">
+              <input type="checkbox" name="games[]" value="{{$key}}" class="mt-1 game-checkbox" />
+              <span>{{$value}}</span>
+            </label>
+            @endforeach
+
+            
+          </div>
+          @error('games')
+            <p class="text-red-500 text-sm mt-2">{{ $message }}</p>
+          @enderror
+        </fieldset>
+        <hr class="my-3 border-brown-700">
+  <h2 class="text-2xl font-bold text-brown-800 my-2">Upload Your Documents</h2>
+                <div id="dropzone" class="border-2 border-dashed border-yellow-400 rounded-lg p-6 text-center cursor-pointer bg-yellow-50 hover:bg-yellow-100 transition">
+                    <p class="text-brown-700">Click here to Upload file</p>
+                    <input type="file" id="fileInput" multiple class="hidden" name="documents[]">
+                </div>
+@error('documents')
+    <p class="text-red-500 text-sm mt-2">{{ $message }}</p>
+@enderror
+
+<!-- Errors for each file -->
+@foreach($errors->get('documents.*') as $key => $messages)
+    @foreach($messages as $message)
+        <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+    @endforeach
+@endforeach
+
+                <!-- File Preview -->
+                <ul id="fileList" class="space-y-2 text-brown-800 mt-4"></ul>
+                
+                <!-- Submit Button -->
+                <div class="mt-6">
+                    <button type="submit" id="submitBtn" class="w-full bg-brown-600 hover:bg-brown-700 text-white font-semibold py-3 px-4 rounded-lg transition duration-300">
+                        Submit Registration
+                    </button>
+                </div>
+            </form>
+        </section>
+    </main>
+@include('components.homepage.footer')
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const dropzone = document.getElementById('dropzone');
+            const fileInput = document.getElementById('fileInput');
+            const fileList = document.getElementById('fileList');
+            
+            // Click on dropzone to trigger file input
+            dropzone.addEventListener('click', () => {
+                fileInput.click();
+            });
+
+            // Handle file selection via click
+            fileInput.addEventListener('change', function(e) {
+                // Clear the previous list
+                fileList.innerHTML = '';
+                
+                // Display all currently selected files
+                for (let i = 0; i < this.files.length; i++) {
+                    renderFile(this.files[i]);
+                }
+            });
+
+            function renderFile(file) {
+                const li = document.createElement('li');
+                li.className = 'flex items-center justify-between p-3 bg-brown-50 rounded-lg border border-brown-200';
+                
+                const fileInfo = document.createElement('div');
+                fileInfo.className = 'flex items-center';
+                
+                // File icon based on type
+                const icon = document.createElement('span');
+                icon.className = 'text-2xl mr-3';
+                if (file.type.startsWith('image/')) {
+                    icon.innerHTML = '🖼️';
+                } else if (file.type.includes('pdf')) {
+                    icon.innerHTML = '📄';
+                } else {
+                    icon.innerHTML = '📁';
+                }
+                
+                const details = document.createElement('div');
+                details.innerHTML = `
+                    <p class="font-medium">${file.name}</p>
+                    <p class="text-sm text-brown-600">${formatFileSize(file.size)}</p>
+                `;
+                
+                fileInfo.appendChild(icon);
+                fileInfo.appendChild(details);
+                li.appendChild(fileInfo);
+                fileList.appendChild(li);
+            }
+
+            function formatFileSize(bytes) {
+                if (bytes === 0) return '0 Bytes';
+                const k = 1024;
+                const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+                const i = Math.floor(Math.log(bytes) / Math.log(k));
+                return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+            }
+        });
+
+          const gameCheckboxes = document.querySelectorAll('.game-checkbox');
+    function updateGameCheckboxStates() {
+      const checked = Array.from(gameCheckboxes).filter(cb => cb.checked);
+      const atLimit = checked.length >= 3;
+      gameCheckboxes.forEach(cb => {
+        if (!cb.checked) {
+          cb.disabled = atLimit;
+          cb.parentElement.classList.toggle('opacity-50', atLimit);
+          cb.parentElement.classList.toggle('cursor-not-allowed', atLimit);
+        } else {
+          cb.parentElement.classList.remove('opacity-50', 'cursor-not-allowed');
+        }
+      });
+    }
+    gameCheckboxes.forEach(cb => cb.addEventListener('change', updateGameCheckboxStates));
+    updateGameCheckboxStates();
+    </script>
+</body>
+</html>

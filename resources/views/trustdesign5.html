@@ -1,0 +1,641 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="description" content="Paralympic Committee of India — empowering para athletes and sharing news, events and athletes information." />
+  <title>PCI — Paralympic Committee of India</title>
+
+  <!-- Tailwind CDN (good for prototypes; for production compile Tailwind to reduce CSS) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Preconnect to common CDNs if you use them (commented out as optional) -->
+  <!-- <link rel="preconnect" href="https://images.unsplash.com"> -->
+
+  <style>
+    /* Minimal custom styles only where Tailwind can't help quickly */
+    :root { --accent: #2563eb; }
+    /* small UI niceties */
+    .dropdown-menu { display: none; }
+    .dropdown-open > .dropdown-menu { display: block; }
+    .partner-logo { filter: grayscale(100%); transition: filter .25s ease, transform .25s ease; }
+    .partner-logo:hover { filter: grayscale(0%); transform: translateY(-3px); }
+    .news-card:hover, .athlete-card:hover { transform: translateY(-6px); box-shadow: 0 10px 24px rgba(0,0,0,.08); }
+    /* smooth reduced-motion preference */
+    @media (prefers-reduced-motion: reduce) {
+      * { scroll-behavior: auto !important; }
+    }
+    /* small helper for visually-hidden text for screen readers */
+    .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+  </style>
+</head>
+<body class="bg-gray-50 text-gray-800 antialiased">
+
+  <!-- ====== NAVBAR (single source for desktop + mobile) ====== -->
+  <header class="bg-white shadow sticky top-0 z-50 p-2">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16">
+        <!-- Brand -->
+        <div class="flex items-center gap-3">
+          <!-- Replace with optimized webp/logo svg -->
+          <img src="logo.jpg" alt="PCI Logo" class="h-10 md:h-14 lg:h-16 w-auto" decoding="async" loading="lazy">
+          <div>
+            <a href="#" class="text-lg font-semibold text-gray-800">ParaSports Association of Surat</a>
+            <span class="sr-only">Homepage</span>
+          </div>
+        </div>
+
+        <!-- Desktop nav -->
+        <nav aria-label="Primary" class="hidden lg:flex lg:items-center lg:space-x-6">
+          <!-- Menu items with dropdowns -->
+          <a href="#" class="text-blue-600 font-medium">Home</a>
+
+          <div class="relative dropdown" data-dropdown>
+            <button class="flex items-center gap-2 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-400 rounded px-2 py-1"
+                    aria-expanded="false" aria-haspopup="true">
+              <span>About US</span>
+              <!-- chevron svg -->
+              <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <path stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"></path>
+              </svg>
+            </button>
+
+            <ul class="dropdown-menu absolute right-0 mt-2 w-56 bg-white border rounded-md shadow-lg py-2"
+                role="menu" aria-label="About PCI submenu">
+              <li role="none"><a role="menuitem" href="#" class="block px-4 py-2 hover:bg-blue-50">Who We Are</a></li>
+              <li role="none"><a role="menuitem" href="#" class="block px-4 py-2 hover:bg-blue-50">Committee</a></li>
+              <li role="none" class="border-t"><a role="menuitem" href="#" class="block px-4 py-2 hover:bg-blue-50">Policies</a></li>
+              <li role="none"><a role="menuitem" href="#" class="block px-4 py-2 hover:bg-blue-50">Our Achievers</a></li>
+              <li role="none"><a role="menuitem" href="#" class="block px-4 py-2 hover:bg-blue-50">Partners</a></li>
+            </ul>
+          </div>
+
+
+          <div class="relative dropdown" data-dropdown>
+            <button class="flex items-center gap-2 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-400 rounded px-2 py-1"
+                    aria-expanded="false" aria-haspopup="true">
+              <span>Sports</span>
+              <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <path stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"></path>
+              </svg>
+            </button>
+
+            <ul class="dropdown-menu absolute right-0 mt-2 w-48 bg-white border rounded-md shadow-lg py-2" role="menu">
+              <li role="none"><a role="menuitem" href="#" class="block px-4 py-2 hover:bg-blue-50">Summer Games</a></li>
+              <li role="none"><a role="menuitem" href="#" class="block px-4 py-2 hover:bg-blue-50">Winter Games</a></li>
+              <li role="none"><a role="menuitem" href="#" class="block px-4 py-2 hover:bg-blue-50">Events Calendar</a></li>
+            </ul>
+          </div>
+
+          <a href="#" class="hover:text-blue-600">Classification</a>
+
+          <div class="relative dropdown" data-dropdown>
+            <button class="flex items-center gap-2 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-400 rounded px-2 py-1"
+                    aria-expanded="false" aria-haspopup="true">
+              <span>News</span>
+              <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <path stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"></path>
+              </svg>
+            </button>
+
+            <ul class="dropdown-menu absolute right-0 mt-2 w-48 bg-white border rounded-md shadow-lg py-2">
+              <li role="none"><a role="menuitem" href="#" class="block px-4 py-2 hover:bg-blue-50">2025 Latest Updates</a></li>
+              <li role="none"><a role="menuitem" href="#" class="block px-4 py-2 hover:bg-blue-50">Latest Results</a></li>
+            </ul>
+          </div>
+
+          <a href="#" class="hover:text-blue-600">Gallery</a>
+        </nav>
+
+        <!-- Action + Mobile button -->
+        <div class="flex items-center gap-3">
+          <a href="#" class="hidden lg:inline-block bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700">Join</a>
+
+          <!-- Mobile toggle -->
+          <button id="mobile-toggle" class="lg:hidden p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-400" aria-label="Open menu" aria-controls="mobile-menu" aria-expanded="false">
+            <!-- hamburger svg -->
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mobile menu (single DOM node controlled by JS) -->
+    <nav id="mobile-menu" class="lg:hidden">
+      <div class="px-4 pt-4 pb-6 bg-white border-t">
+        <div class="space-y-2">
+          <a href="#" class="block px-3 py-2 text-blue-600 font-medium rounded">Home</a>
+
+          <!-- Mobile dropdown pattern: button + nested list -->
+          <div>
+            <button class="w-full text-left px-3 py-2 flex items-center justify-between rounded hover:bg-gray-50" data-mobile-toggle>
+              <span>About PCI</span>
+              <svg class="w-4 h-4 transform transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <path stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/>
+              </svg>
+            </button>
+            <ul class="mt-1 ml-2 hidden" data-mobile-list>
+              <li><a href="#" class="block px-3 py-2 hover:bg-blue-50 rounded">Who We Are</a></li>
+              <li><a href="#" class="block px-3 py-2 hover:bg-blue-50 rounded">Committee</a></li>
+              <li><a href="#" class="block px-3 py-2 hover:bg-blue-50 rounded">Policies</a></li>
+            </ul>
+          </div>
+
+          <a href="#" class="block px-3 py-2 rounded hover:bg-gray-50">Paris 2024</a>
+
+          <div>
+            <button class="w-full text-left px-3 py-2 flex items-center justify-between rounded hover:bg-gray-50" data-mobile-toggle>
+              <span>Sports</span>
+              <svg class="w-4 h-4 transform transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <path stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/>
+              </svg>
+            </button>
+            <ul class="mt-1 ml-2 hidden" data-mobile-list>
+              <li><a href="#" class="block px-3 py-2 hover:bg-blue-50 rounded">Summer Games</a></li>
+              <li><a href="#" class="block px-3 py-2 hover:bg-blue-50 rounded">Winter Games</a></li>
+            </ul>
+          </div>
+
+          <a href="#" class="block px-3 py-2 rounded hover:bg-gray-50">Classification</a>
+          <a href="#" class="block px-3 py-2 rounded hover:bg-gray-50">News</a>
+          <a href="#" class="block px-3 py-2 rounded hover:bg-gray-50">Gallery</a>
+
+          <a href="#" class="block mt-3 bg-blue-600 text-white text-center px-3 py-2 rounded">Join</a>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <!-- ====== MAIN ====== -->
+  <main>
+
+    <!-- HERO / SLIDER -->
+    <section aria-labelledby="hero-heading" class="relative">
+      <div id="hero-slider" class="relative h-[48vh] md:h-[65vh] overflow-hidden">
+        <!-- Slider Navigation Arrows -->
+<!-- <button id="prev-slide" class="absolute left-2 top-1/2 -translate-y-1/2 bg-black bg-opacity-50 text-white rounded-full p-2 hover:bg-opacity-75 z-10">
+    &#10094; 
+</button>
+<button id="next-slide" class="absolute right-2 top-1/2 -translate-y-1/2 bg-black bg-opacity-50 text-white rounded-full p-2 hover:bg-opacity-75 z-10">
+    &#10095; 
+</button> -->
+
+        <!-- slides: keep minimal DOM — items are absolutely positioned -->
+        <div class="absolute inset-0 transition-opacity duration-700 ease-in-out opacity-100 slide" data-index="0">
+          <picture>
+            <source srcset="https://images.unsplash.com/photo-1547347298-4074fc3086f0?fm=webp&q=80&w=1600&fit=crop" type="image/webp">
+            <img src="https://images.unsplash.com/photo-1547347298-4074fc3086f0?auto=format&fit=crop&w=1470&q=80" alt="Paralympic athletes celebrating" class="w-full h-full object-cover" loading="lazy" decoding="async">
+          </picture>
+          <div class="absolute inset-0 bg-black/50 flex flex-col items-center justify-end text-center p-6">
+            <h1 id="hero-heading" class="text-white text-2xl md:text-4xl font-bold mb-2">Empowering Para Athletes</h1>
+            <p class="text-white text-base md:text-lg max-w-3xl">Supporting athletes to achieve excellence on the global stage.</p>
+          </div>
+        </div>
+
+        <div class="absolute inset-0 transition-opacity duration-700 ease-in-out opacity-0 slide" data-index="1" aria-hidden="true">
+          <picture>
+            <source srcset="https://images.unsplash.com/photo-1541534741688-6078c6bfb5c5?fm=webp&q=80&w=1600&fit=crop" type="image/webp">
+            <img src="https://images.unsplash.com/photo-1541534741688-6078c6bfb5c5?auto=format&fit=crop&w=1469&q=80" alt="Team India para athletes" class="w-full h-full object-cover" loading="lazy" decoding="async">
+          </picture>
+          <div class="absolute inset-0 bg-black/50 flex flex-col items-center justify-end text-center p-6">
+            <h2 class="text-white text-2xl md:text-4xl font-bold mb-2">Team India</h2>
+            <p class="text-white text-base md:text-lg max-w-3xl">Celebrating our champions at international events.</p>
+          </div>
+        </div>
+
+        <div class="absolute inset-0 transition-opacity duration-700 ease-in-out opacity-0 slide" data-index="2" aria-hidden="true">
+          <picture>
+            <source srcset="https://images.unsplash.com/photo-1552674605-db6ffd4facb5?fm=webp&q=80&w=1600&fit=crop" type="image/webp">
+            <img src="https://images.unsplash.com/photo-1552674605-db6ffd4facb5?auto=format&fit=crop&w=1470&q=80" alt="Training camp for athletes" class="w-full h-full object-cover" loading="lazy" decoding="async">
+          </picture>
+          <div class="absolute inset-0 bg-black/50 flex flex-col items-center justify-end text-center p-6">
+            <h2 class="text-white text-2xl md:text-4xl font-bold mb-2">Training Camps</h2>
+            <p class="text-white text-base md:text-lg max-w-3xl">World-class facilities for our athletes.</p>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ABOUT -->
+    <section class="py-16 bg-white">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+          <h2 class="text-3xl font-bold">About Paralympic Committee of India</h2>
+          <div class="w-20 h-1 bg-blue-600 mx-auto mt-4"></div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+          <div>
+            <picture>
+              <source srcset="https://images.unsplash.com/photo-1541534741688-6078c6bfb5c5?fm=webp&q=80&w=1200&fit=crop" type="image/webp">
+              <img src="https://images.unsplash.com/photo-1541534741688-6078c6bfb5c5?auto=format&fit=crop&w=1469&q=80" alt="PCI Team" class="rounded-lg shadow-lg w-full object-cover" loading="lazy" decoding="async">
+            </picture>
+          </div>
+
+          <div>
+            <p class="text-gray-700 mb-4">The Paralympic Committee of India (PCI) is the apex governing body dedicated to promoting and developing Para Sport in the country. PCI is affiliated with the International Paralympic Committee (IPC) and recognised by the Ministry of Youth Affairs and Sports (MYAS), Government of India.</p>
+            <p class="text-gray-700 mb-4">Our mission is to identify, train and support athletes across the country, nurturing a dynamic Paralympic movement and ensuring strong representation in both national and international sports events.</p>
+            <p class="text-gray-700 mb-6">With affiliations spanning State Associations and Federations, PCI plays a crucial role in selecting and preparing Indian teams for the Paralympic Games and other international competitions.</p>
+            <a href="#" class="inline-block bg-blue-600 text-white px-6 py-2 rounded-md hover:bg-blue-700">Learn More</a>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="py-12 bg-gray-100">
+
+
+
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <h2 class="text-3xl font-bold text-center text-gray-800 mb-8">Gallery</h2>
+    
+    <!-- Image Grid -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <!-- Card 1 -->
+      <div class="bg-white rounded-lg shadow hover:shadow-lg transition overflow-hidden">
+        <img src="gallery1.webp" alt="Caption 1" class="w-full h-56 object-cover">
+        <div class="p-4">
+          <p class="text-sm text-gray-600">Caption for image 1</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- View More Button -->
+    <div class="text-center mt-8">
+      <a href="gallery.html" class="inline-block bg-blue-600 text-white px-6 py-2 rounded-full shadow hover:bg-blue-700 transition">
+        View More
+      </a>
+    </div>
+  </div>
+</section>
+
+    <!-- LATEST NEWS -->
+    <!-- <section class="py-16 bg-gray-50">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+          <h2 class="text-3xl font-bold">Latest News</h2>
+          <div class="w-20 h-1 bg-blue-600 mx-auto mt-4"></div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <article class="news-card bg-white rounded-lg overflow-hidden shadow transition-transform duration-200">
+            <img src="https://via.placeholder.com/800x450?text=News+1" alt="Honoured visit photo" class="w-full h-48 object-cover" loading="lazy" decoding="async">
+            <div class="p-5">
+              <div class="flex justify-between items-center mb-2 text-sm text-gray-500">
+                <span>By NPC India</span>
+                <time datetime="2025-07-24">July 24, 2025</time>
+              </div>
+              <h3 class="text-xl font-semibold mb-2">Honoured Visit by Shri Prasad Mahaanakar Ji to PCI Headquarters</h3>
+              <p class="text-gray-600 mb-4">Honoured to welcome Shri Prasad Mahaanakar ji, Sangathan Mantri of Akhil Bharatiya Kreeda Bharati, to the Paralympic Committee of India office in New Delhi.</p>
+              <a href="#" class="text-blue-600 font-medium hover:text-blue-800">Read More →</a>
+            </div>
+          </article>
+
+          <article class="news-card bg-white rounded-lg overflow-hidden shadow transition-transform duration-200">
+            <img src="https://via.placeholder.com/800x450?text=News+2" alt="South Asia para sports" class="w-full h-48 object-cover" loading="lazy" decoding="async">
+            <div class="p-5">
+              <div class="flex justify-between items-center mb-2 text-sm text-gray-500">
+                <span>By NPC India</span>
+                <time datetime="2025-07-14">July 14, 2025</time>
+              </div>
+              <h3 class="text-xl font-semibold mb-2">South Asia Unites for Para Sports Excellence</h3>
+              <p class="text-gray-600 mb-4">Paralympic Committee of India Director K.R. Satyanarayan elected President, South Asian Para Sports Federation.</p>
+              <a href="#" class="text-blue-600 font-medium hover:text-blue-800">Read More →</a>
+            </div>
+          </article>
+
+          <article class="news-card bg-white rounded-lg overflow-hidden shadow transition-transform duration-200">
+            <img src="https://via.placeholder.com/800x450?text=News+3" alt="Venue visit for championships" class="w-full h-48 object-cover" loading="lazy" decoding="async">
+            <div class="p-5">
+              <div class="flex justify-between items-center mb-2 text-sm text-gray-500">
+                <span>By NPC India</span>
+                <time datetime="2025-06-19">June 19, 2025</time>
+              </div>
+              <h3 class="text-xl font-semibold mb-2">Gearing Up for Greatness!</h3>
+              <p class="text-gray-600 mb-4">Venue visits set the tone for a historic Delhi 2025 World Para Athletics Championships.</p>
+              <a href="#" class="text-blue-600 font-medium hover:text-blue-800">Read More →</a>
+            </div>
+          </article>
+        </div>
+
+        <div class="text-center mt-10">
+          <a href="#" class="inline-block bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-md">View All News</a>
+        </div>
+      </div>
+    </section> -->
+
+    <!-- FEATURED ATHLETES -->
+    
+
+    <!-- MEDALS -->
+    <!-- <section class="py-16 bg-blue-600 text-white">
+      <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <h2 class="text-3xl font-bold mb-2">Paris 2024 Paralympics Medal Tally</h2>
+        <p class="mb-6 text-lg">India's Remarkable Achievement</p>
+
+        <div class="flex justify-center gap-8 md:gap-16">
+          <div>
+            <div class="text-4xl md:text-6xl font-bold">07</div>
+            <div>Gold</div>
+          </div>
+
+          <div>
+            <div class="text-4xl md:text-6xl font-bold">09</div>
+            <div>Silver</div>
+          </div>
+
+          <div>
+            <div class="text-4xl md:text-6xl font-bold">13</div>
+            <div>Bronze</div>
+          </div>
+        </div>
+
+        <div class="mt-8">
+          <a href="#" class="inline-block bg-white text-blue-600 px-6 py-2 rounded-md">Meet Our Winners</a>
+        </div>
+      </div>
+    </section> -->
+
+    <!-- UPCOMING EVENTS -->
+    <!-- <section class="py-16 bg-gray-50">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+          <h2 class="text-3xl font-bold">Upcoming Events</h2>
+          <div class="w-20 h-1 bg-blue-600 mx-auto mt-4"></div>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-8">
+          <div class="bg-white rounded-lg shadow p-6">
+            <h3 class="text-xl font-semibold mb-2">Beijing 2025 Para Powerlifting World Cup</h3>
+            <p class="text-gray-600 mb-4">Join us for the prestigious Beijing 2025 Para Powerlifting World Cup featuring top athletes from around the world.</p>
+            <a href="#" class="text-blue-600">Learn More →</a>
+          </div>
+
+          <div class="bg-white rounded-lg shadow p-6">
+            <h3 class="text-xl font-semibold mb-2">Cairo 2025 World Championships for Juniors & Seniors</h3>
+            <p class="text-gray-600 mb-4">Witness the future stars of para sports at the Cairo 2025 World Championships for Juniors & Seniors.</p>
+            <a href="#" class="text-blue-600">Learn More →</a>
+          </div>
+        </div>
+
+        <div class="mt-8">
+          <h3 class="text-xl font-semibold mb-4">Latest Updates</h3>
+          <ul class="space-y-2">
+            <li><a href="#" class="text-gray-700 hover:text-blue-600">05/08/2025 – Events List – 14th Junior and Sub-Junior National Para Athletics Championships 2025</a></li>
+            <li><a href="#" class="text-gray-700 hover:text-blue-600">04/08/2025 – Circular – 14th Junior and Sub-Junior National Para Athletics Championships 2025</a></li>
+            <li><a href="#" class="text-gray-700 hover:text-blue-600">27/07/2025 – Minutes of the Meeting of the Selection Committee for the Selection of Para Shooters</a></li>
+          </ul>
+        </div>
+      </div>
+    </section> -->
+
+    <!-- GALLERY -->
+    <!-- <section class="py-16 bg-white">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+          <h2 class="text-3xl font-bold">Gallery</h2>
+          <div class="w-20 h-1 bg-blue-600 mx-auto mt-4"></div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div class="relative overflow-hidden rounded-lg shadow group">
+            <img src="https://via.placeholder.com/800x500?text=Dasara+photos+2024" alt="Dasara photos of Paralympic committee of India 2024" class="w-full h-56 object-cover transition-transform duration-300 group-hover:scale-105" loading="lazy" decoding="async">
+            <div class="absolute inset-0 bg-black/50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+              <h3 class="text-white text-lg font-semibold">Dasara photos of Paralympic committee of India 2024</h3>
+            </div>
+          </div>
+
+          <div class="relative overflow-hidden rounded-lg shadow group">
+            <img src="https://via.placeholder.com/800x500?text=Meeting+with+CM" alt="PCI delegation meets Delhi Chief Minister" class="w-full h-56 object-cover transition-transform duration-300 group-hover:scale-105" loading="lazy" decoding="async">
+            <div class="absolute inset-0 bg-black/50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+              <h3 class="text-white text-lg font-semibold">PCI Delegation Meets Delhi Chief Minister</h3>
+            </div>
+          </div>
+
+          <div class="relative overflow-hidden rounded-lg shadow group">
+            <img src="https://via.placeholder.com/800x500?text=Para+Athletics+International" alt="6th Indian Open Para Athletics International Championship" class="w-full h-56 object-cover transition-transform duration-300 group-hover:scale-105" loading="lazy" decoding="async">
+            <div class="absolute inset-0 bg-black/50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+              <h3 class="text-white text-lg font-semibold">6th Indian Open Para Athletics International Championship</h3>
+            </div>
+          </div>
+        </div>
+
+        <div class="text-center mt-10">
+          <a href="#" class="inline-block bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-md">View Gallery</a>
+        </div>
+      </div>
+    </section> -->
+
+    <!-- PARTNERS -->
+    <!-- <section class="py-16 bg-gray-100">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <h2 class="text-3xl font-bold mb-4">Our Partners</h2>
+        <div class="w-20 h-1 bg-blue-600 mx-auto mb-8"></div>
+
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 items-center">
+          <img src="https://via.placeholder.com/200x100?text=Partner+1" alt="Partner 1" class="mx-auto h-16 partner-logo" loading="lazy" decoding="async">
+          <img src="https://via.placeholder.com/200x100?text=Partner+2" alt="Partner 2" class="mx-auto h-16 partner-logo" loading="lazy" decoding="async">
+          <img src="https://via.placeholder.com/200x100?text=Partner+3" alt="Partner 3" class="mx-auto h-16 partner-logo" loading="lazy" decoding="async">
+          <img src="https://via.placeholder.com/200x100?text=Partner+4" alt="Partner 4" class="mx-auto h-16 partner-logo" loading="lazy" decoding="async">
+          <img src="https://via.placeholder.com/200x100?text=Partner+5" alt="Partner 5" class="mx-auto h-16 partner-logo" loading="lazy" decoding="async">
+        </div>
+      </div>
+    </section> -->
+
+    <!-- JOIN CTA -->
+    <!-- <section class="py-16 bg-blue-600 text-white">
+      <div class="max-w-4xl mx-auto px-4 text-center">
+        <h2 class="text-3xl font-bold mb-4">Join Hands to Elevate Indian Para-Athletes' Journey to Glory!</h2>
+        <p class="text-lg mb-6">Be part of India's growing Paralympic movement and support our athletes in their quest for excellence.</p>
+        <a href="#" class="inline-block bg-white text-blue-600 px-8 py-3 rounded-md font-medium">Join Us Today</a>
+      </div>
+    </section> -->
+    
+
+  </main>
+
+  <!-- ====== FOOTER ====== -->
+  <footer class="bg-gray-800 text-white pt-12 pb-6">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
+        <div>
+          <h3 class="text-xl font-semibold mb-4">Paralympic Committee of India</h3>
+          <p class="mb-4">The Paralympic Committee of India is the apex governing body dedicated to promoting and developing Para Sport in the country.</p>
+          <div class="flex space-x-3">
+            <!-- simple svg icons -->
+            <a class="hover:text-blue-400" href="#" aria-label="Facebook">
+              <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M22 12a10 10 0 1 0-11.5 9.9v-7h-2.2V12h2.2V9.6c0-2.2 1.3-3.4 3.3-3.4.9 0 1.8.1 1.8.1v2h-1c-1 0-1.3.6-1.3 1.2V12h2.3l-.4 2.9h-1.9v7A10 10 0 0 0 22 12z"/></svg>
+            </a>
+            <a class="hover:text-blue-400" href="#" aria-label="Instagram">
+              <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5zm5 6.2a4.8 4.8 0 1 0 0 9.6 4.8 4.8 0 0 0 0-9.6zm6.5-1.6a1.1 1.1 0 1 0 0 2.2 1.1 1.1 0 0 0 0-2.2z"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <div>
+          <h3 class="text-xl font-semibold mb-4">Address</h3>
+          <p class="mb-2 font-medium">Correspondence Office:</p>
+          <p class="mb-4">Jaisalmer House, 26 Mansingh Road, New Delhi - 110011 (India)</p>
+
+          <p class="mb-2 font-medium">Registered Office Address:</p>
+          <p>28, Sports Authority of Karnataka Building, Gate no. 2, Sree Kanteerava Stadium Kasturba Road, Bengaluru 560001 (India)</p>
+        </div>
+
+        <div>
+          <h3 class="text-xl font-semibold mb-4">Contact</h3>
+          <p class="mb-2">Phone: <a href="tel:01123075126" class="hover:text-blue-400">011-23075126</a></p>
+          <p class="mb-2">Telefax: <a href="tel:01123075226" class="hover:text-blue-400">011-23075226</a></p>
+          <p class="mb-4">Email: <a href="mailto:npcindia@paralympicindia.com" class="hover:text-blue-400">npcindia@paralympicindia.com</a></p>
+        </div>
+
+        <div>
+          <h3 class="text-xl font-semibold mb-4">Quick Links</h3>
+          <ul class="space-y-2">
+            <li><a href="#" class="hover:text-blue-400">Privacy Policy</a></li>
+            <li><a href="#" class="hover:text-blue-400">Terms of Service</a></li>
+            <li><a href="#" class="hover:text-blue-400">Sitemap</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="border-t border-gray-700 pt-6 flex flex-col md:flex-row justify-between items-center">
+        <p>© 2025, NPC India - All Rights Reserved.</p>
+        <p class="mt-2 md:mt-0">Website Maintained by <a href="#" class="hover:text-blue-400">DSeT Consultation</a></p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ====== SCRIPTS (defer-like behavior — kept compact) ====== -->
+  <script>
+    
+    (function () {
+      /* ===== Mobile menu open/close ===== */
+      const mobileToggle = document.getElementById('mobile-toggle');
+      const mobileMenu = document.getElementById('mobile-menu');
+      mobileToggle.addEventListener('click', () => {
+        const expanded = mobileToggle.getAttribute('aria-expanded') === 'true';
+        mobileToggle.setAttribute('aria-expanded', String(!expanded));
+        mobileMenu.classList.toggle('hidden');
+        // for initial HTML state ensure #mobile-menu is hidden in CSS or inline; here we toggle
+        if (!mobileMenu.classList.contains('hidden')) mobileMenu.style.display = 'block';
+        else mobileMenu.style.display = 'none';
+      });
+      // Hide mobile menu by default on load
+      if (!mobileMenu.classList.contains('hidden')) {
+        mobileMenu.style.display = 'none';
+        mobileMenu.classList.add('hidden');
+      }
+
+      /* ===== Mobile nested toggles ===== */
+      document.querySelectorAll('[data-mobile-toggle]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const list = btn.nextElementSibling;
+          const open = !list.classList.contains('hidden');
+          // rotate icon
+          const svg = btn.querySelector('svg');
+          if (open) svg.style.transform = 'rotate(0deg)';
+          else svg.style.transform = 'rotate(180deg)';
+          list.classList.toggle('hidden');
+        });
+      });
+
+      /* ===== Desktop dropdowns (aria + click/hover + keyboard) ===== */
+      document.querySelectorAll('.dropdown').forEach(drop => {
+        const btn = drop.querySelector('button');
+        const menu = drop.querySelector('.dropdown-menu');
+
+        // open/close helpers
+        function open() {
+          drop.classList.add('dropdown-open');
+          btn.setAttribute('aria-expanded', 'true');
+        }
+        function close() {
+          drop.classList.remove('dropdown-open');
+          btn.setAttribute('aria-expanded', 'false');
+        }
+
+        // click toggles
+        btn.addEventListener('click', (e) => {
+          e.preventDefault();
+          const isOpen = drop.classList.contains('dropdown-open');
+          if (isOpen) close(); else open();
+        });
+
+        // hover for pointer devices (enhancement)
+        drop.addEventListener('mouseenter', open);
+        drop.addEventListener('mouseleave', close);
+
+        // keyboard: Esc to close
+        drop.addEventListener('keydown', (e) => {
+          if (e.key === 'Escape') close();
+        });
+
+        // close when clicking outside
+        document.addEventListener('click', (e) => {
+          if (!drop.contains(e.target)) close();
+        });
+      });
+
+      /* ===== Slider logic ===== */
+      const slides = Array.from(document.querySelectorAll('#hero-slider .slide'));
+      const dots = Array.from(document.querySelectorAll('.slider-dot'));
+      let current = 0;
+      const slideCount = slides.length;
+      let intervalId = null;
+      const INTERVAL = 2000;
+      const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      function showSlide(idx) {
+        slides.forEach((s, i) => {
+          const el = s;
+          const isActive = i === idx;
+          el.style.opacity = isActive ? '1' : '0';
+          el.setAttribute('aria-hidden', String(!isActive));
+        });
+        dots.forEach((d, i) => d.classList.toggle('bg-blue-600', i === idx));
+        current = idx;
+      }
+
+      dots.forEach(d => {
+        d.addEventListener('click', () => {
+          const idx = parseInt(d.dataset.index, 10);
+          showSlide(idx);
+          restartInterval();
+        });
+      });
+
+      function nextSlide() {
+        showSlide((current + 1) % slideCount);
+      }
+
+      function startInterval() {
+        if (prefersReduced) return;
+        intervalId = setInterval(nextSlide, INTERVAL);
+      }
+      function stopInterval() { if (intervalId) clearInterval(intervalId); }
+      function restartInterval() { stopInterval(); startInterval(); }
+
+      // initialize
+      showSlide(0);
+      startInterval();
+
+      // pause on hover (desktop)
+      const hero = document.getElementById('hero-slider');
+      hero.addEventListener('mouseenter', stopInterval);
+      hero.addEventListener('mouseleave', startInterval);
+
+      /* ===== Small accessibility helpers ===== */
+      // ensure mobile menu hidden on large screens resize
+      window.addEventListener('resize', () => {
+        if (window.innerWidth >= 1024) {
+          mobileMenu.style.display = 'none';
+          mobileMenu.classList.add('hidden');
+          mobileToggle.setAttribute('aria-expanded', 'false');
+        }
+      });
+    })();
+    
+  </script>
+</body>
+</html>
+

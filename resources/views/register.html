@@ -1,0 +1,390 @@
+<form class="p-6 grid grid-cols-1 gap-8" onsubmit="handleSubmit(event)">
+  <!-- Basic Information -->
+  <fieldset class="space-y-6">
+    <legend class="text-xl font-semibold text-brown-800">Basic Information</legend>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+      <div>
+        <label class="block text-sm font-medium text-brown-700">Surname Name</label>
+        <input type="text" name="surname" required class="mt-1 w-full rounded-lg border border-brown-200 bg-brown-50/50 px-3 py-2 focus:ring-2 focus:ring-brown-400 focus:border-brown-400" placeholder="Enter surname" />
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium text-brown-700">Name of the Athlete</label>
+        <input type="text" name="athlete_name" required class="mt-1 w-full rounded-lg border border-brown-200 bg-brown-50/50 px-3 py-2 focus:ring-2 focus:ring-brown-400 focus:border-brown-400" placeholder="Enter full name" />
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium text-brown-700">Father’s Name</label>
+        <input type="text" name="father_name" class="mt-1 w-full rounded-lg border border-brown-200 bg-brown-50/50 px-3 py-2 focus:ring-2 focus:ring-brown-400 focus:border-brown-400" placeholder="Enter father's name" />
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium text-brown-700">Date of Birth</label>
+        <input type="date" name="dob" required class="mt-1 w-full rounded-lg border border-brown-200 bg-brown-50/50 px-3 py-2 focus:ring-2 focus:ring-brown-400 focus:border-brown-400" />
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium text-brown-700">Male / Female</label>
+        <select name="gender" required class="mt-1 w-full rounded-lg border border-brown-200 bg-brown-50/50 px-3 py-2 focus:ring-2 focus:ring-brown-400 focus:border-brown-400">
+          <option value="" disabled selected>Select</option>
+          <option>Male</option>
+          <option>Female</option>
+          <option>Other</option>
+          <option>Prefer not to say</option>
+        </select>
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium text-brown-700">Age Groups</label>
+        <select name="age_group" required class="mt-1 w-full rounded-lg border border-brown-200 bg-brown-50/50 px-3 py-2 focus:ring-2 focus:ring-brown-400 focus:border-brown-400">
+          <option value="" disabled selected>Select</option>
+          <option>Under 14</option>
+          <option>Under 17</option>
+          <option>Under 19</option>
+          <option>Open</option>
+          <option>Masters</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+      <div>
+        <label class="block text-sm font-medium text-brown-700">Full Postal Address</label>
+        <textarea name="address" rows="3" required class="mt-1 w-full rounded-lg border border-brown-200 bg-brown-50/50 px-3 py-2 focus:ring-2 focus:ring-brown-400 focus:border-brown-400" placeholder="Street, City, State, ZIP"></textarea>
+      </div>
+
+      <div class="grid grid-cols-1 gap-5">
+        <div>
+          <label class="block text-sm font-medium text-brown-700">Contact Number</label>
+          <input type="tel" name="phone" required pattern="[0-9+\-\s]{7,}" class="mt-1 w-full rounded-lg border border-brown-200 bg-brown-50/50 px-3 py-2 focus:ring-2 focus:ring-brown-400 focus:border-brown-400" placeholder="+1 234 567 890" />
+        </div>
+
+        <div>
+          <label class="block text-sm font-medium text-brown-700">E-mail ID</label>
+          <input type="email" name="email" required class="mt-1 w-full rounded-lg border border-brown-200 bg-brown-50/50 px-3 py-2 focus:ring-2 focus:ring-brown-400 focus:border-brown-400" placeholder="name@example.com" />
+        </div>
+      </div>
+    </div>
+  </fieldset>
+
+  <hr class="my-1 border-brown-700">
+
+  <!-- Percentage Field -->
+  <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 mt-2">
+    <div>
+      <label class="block text-sm font-medium text-brown-700">Percentage</label>
+      <input type="number" name="percentage" min="0" max="100" step="1" required class="mt-1 w-full rounded-lg border border-brown-200 bg-brown-50/50 px-3 py-2 focus:ring-2 focus:ring-brown-400 focus:border-brown-400" placeholder="0 - 100" />
+    </div>
+  </div>
+
+  <hr class="my-1 border-brown-700">
+
+  <!-- Disability Category (single choice) -->
+  <fieldset class="space-y-4">
+    <legend class="text-xl font-semibold text-brown-800">Disability Category (Select one)</legend>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+      <!-- Radio buttons -->
+      <label class="flex items-start gap-3 p-3 rounded-lg border border-brown-200 bg-brown-50/40 hover:bg-brown-100/40 cursor-pointer">
+        <input type="radio" name="disability" value="Blindness" required class="mt-1" />
+        <span>Blindness</span>
+      </label>
+      <label class="flex items-start gap-3 p-3 rounded-lg border border-brown-200 bg-brown-50/40 hover:bg-brown-100/40 cursor-pointer">
+        <input type="radio" name="disability" value="Low Vision" class="mt-1" />
+        <span>Low Vision</span>
+      </label>
+      <label class="flex items-start gap-3 p-3 rounded-lg border border-brown-200 bg-brown-50/40 hover:bg-brown-100/40 cursor-pointer">
+        <input type="radio" name="disability" value="Leprosy Cured Persons" class="mt-1" />
+        <span>Leprosy Cured Persons</span>
+      </label>
+      <label class="flex items-start gap-3 p-3 rounded-lg border border-brown-200 bg-brown-50/40 hover:bg-brown-100/40 cursor-pointer">
+        <input type="radio" name="disability" value="Hearing Impairment (Deaf and Hard of Hearing)" class="mt-1" />
+        <span>Hearing Impairment (Deaf and Hard of Hearing)</span>
+      </label>
+      <label class="flex items-start gap-3 p-3 rounded-lg border border-brown-200 bg-brown-50/40 hover:bg-brown-100/40 cursor-pointer">
+        <input type="radio" name="disability" value="Locomotor Disability" class="mt-1" />
+        <span>Locomotor Disability</span>
+      </label>
+      <label class="flex items-start gap-3 p-3 rounded-lg border border-brown-200 bg-brown-50/40 hover:bg-brown-100/40 cursor-pointer">
+        <input type="radio" name="disability" value="Dwarfism" class="mt-1" />
+        <span>Dwarfism</span>
+      </label>
+      <label class="flex items-start gap-3 p-3 rounded-lg border border-brown-200 bg-brown-50/40 hover:bg-brown-100/40 cursor-pointer">
+        <input type="radio" name="disability" value="Intellectual Disability" class="mt-1" />
+        <span>Intellectual Disability</span>
+      </label>
+      <label class="flex items-start gap-3 p-3 rounded-lg border border-brown-200 bg-brown-50/40 hover:bg-brown-100/40 cursor-pointer">
+        <input type="radio" name="disability" value="Mental Illness" class="mt-1" />
+        <span>Mental Illness</span>
+      </label>
+      <label class="flex items-start gap-3 p-3 rounded-lg border border-brown-200 bg-brown-50/40 hover:bg-brown-100/40 cursor-pointer">
+        <input type="radio" name="disability" value="Autism Spectrum Disorder" class="mt-1" />
+        <span>Autism Spectrum Disorder</span>
+      </label>
+      <label class="flex items-start gap-3 p-3 rounded-lg border border-brown-200 bg-brown-50/40 hover:bg-brown-100/40 cursor-pointer">
+        <input type="radio" name="disability" value="Cerebral Palsy" class="mt-1" />
+        <span>Cerebral Palsy</span>
+      </label>
+      <label class="flex items-start gap-3 p-3 rounded-lg border border-brown-200 bg-brown-50/40 hover:bg-brown-100/40 cursor-pointer">
+        <input type="radio" name="disability" value="Muscular Dystrophy" class="mt-1" />
+        <span>Muscular Dystrophy</span>
+      </label>
+      <label class="flex items-start gap-3 p-3 rounded-lg border border-brown-200 bg-brown-50/40 hover:bg-brown-100/40 cursor-pointer">
+        <input type="radio" name="disability" value="Chronic Neurological Conditions" class="mt-1" />
+        <span>Chronic Neurological Conditions</span>
+      </label>
+      <label class="flex items-start gap-3 p-3 rounded-lg border border-brown-200 bg-brown-50/40 hover:bg-brown-100/40 cursor-pointer">
+        <input type="radio" name="disability" value="Specific Learning Disabilities" class="mt-1" />
+        <span>Specific Learning Disabilities</span>
+      </label>
+      <label class="flex items-start gap-3 p-3 rounded-lg border border-brown-200 bg-brown-50/40 hover:bg-brown-100/40 cursor-pointer">
+        <input type="radio" name="disability" value="Multiple Sclerosis" class="mt-1" />
+        <span>Multiple Sclerosis</span>
+      </label>
+      <label class="flex items-start gap-3 p-3 rounded-lg border border-brown-200 bg-brown-50/40 hover:bg-brown-100/40 cursor-pointer">
+        <input type="radio" name="disability" value="Speech and Language Disability" class="mt-1" />
+        <span>Speech and Language Disability</span>
+      </label>
+      <label class="flex items-start gap-3 p-3 rounded-lg border border-brown-200 bg-brown-50/40 hover:bg-brown-100/40 cursor-pointer">
+        <input type="radio" name="disability" value="Thalassemia" class="mt-1" />
+        <span>Thalassemia</span>
+      </label>
+      <label class="flex items-start gap-3 p-3 rounded-lg border border-brown-200 bg-brown-50/40 hover:bg-brown-100/40 cursor-pointer">
+        <input type="radio" name="disability" value="Hemophilia" class="mt-1" />
+        <span>Hemophilia</span>
+      </label>
+      <label class="flex items-start gap-3 p-3 rounded-lg border border-brown-200 bg-brown-50/40 hover:bg-brown-100/40 cursor-pointer">
+        <input type="radio" name="disability" value="Sickle Cell Disease" class="mt-1" />
+        <span>Sickle Cell Disease</span>
+      </label>
+      <label class="flex items-start gap-3 p-3 rounded-lg border border-brown-200 bg-brown-50/40 hover:bg-brown-100/40 cursor-pointer">
+        <input type="radio" name="disability" value="Multiple Disabilities" class="mt-1" />
+        <span>Multiple Disabilities (more than one of the above specified disabilities)</span>
+      </label>
+      <label class="flex items-start gap-3 p-3 rounded-lg border border-brown-200 bg-brown-50/40 hover:bg-brown-100/40 cursor-pointer">
+        <input type="radio" name="disability" value="Acid Attack Victim" class="mt-1" />
+        <span>Acid Attack Victim</span>
+      </label>
+      <label class="flex items-start gap-3 p-3 rounded-lg border border-brown-200 bg-brown-50/40 hover:bg-brown-100/40 cursor-pointer">
+        <input type="radio" name="disability" value="Parkinson’s Disease" class="mt-1" />
+        <span>Parkinson’s Disease</span>
+      </label>
+    </div>
+  </fieldset>
+
+  <hr class="my-1 border-brown-700">
+
+  <!-- Games (max 3 checkboxes) -->
+  <fieldset class="space-y-4">
+    <legend class="text-xl font-semibold text-brown-800">Select Games (Up to 3)</legend>
+    <p class="text-sm text-brown-600">You can choose a maximum of three games. After three selections, the remaining options will be disabled.</p>
+
+    <div id="games-list" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+      <!-- Checkbox list -->
+      <label class="flex items-start gap-3 p-3 rounded-lg border border-brown-200 bg-brown-50/40 hover:bg-brown-100/40 cursor-pointer">
+        <input type="checkbox" name="games" value="Archery" class="mt-1 game-checkbox" />
+        <span>Archery</span>
+      </label>
+      <label class="flex items-start gap-3 p-3 rounded-lg border border-brown-200 bg-brown-50/40 hover:bg-brown-100/40 cursor-pointer">
+        <input type="checkbox" name="games" value="Para athletics" class="mt-1 game-checkbox" />
+        <span>Para athletics</span>
+      </label>
+      <label class="flex items-start gap-3 p-3 rounded-lg border border-brown-200 bg-brown-50/40 hover:bg-brown-100/40 cursor-pointer">
+        <input type="checkbox" name="games" value="Para badminton" class="mt-1 game-checkbox" />
+        <span>Para badminton</span>
+      </label>
+      <label class="flex items-start gap-3 p-3 rounded-lg border border-brown-200 bg-brown-50/40 hover:bg-brown-100/40 cursor-pointer">
+        <input type="checkbox" name="games" value="Boccia" class="mt-1 game-checkbox" />
+        <span>Boccia</span>
+      </label>
+      <label class="flex items-start gap-3 p-3 rounded-lg border border-brown-200 bg-brown-50/40 hover:bg-brown-100/40 cursor-pointer">
+        <input type="checkbox" name="games" value="Para canoe" class="mt-1 game-checkbox" />
+        <span>Para canoe</span>
+      </label>
+      <label class="flex items-start gap-3 p-3 rounded-lg border border-brown-200 bg-brown-50/40 hover:bg-brown-100/40 cursor-pointer">
+        <input type="checkbox" name="games" value="Para cycling" class="mt-1 game-checkbox" />
+        <span>Para cycling</span>
+      </label>
+      <label class="flex items-start gap-3 p-3 rounded-lg border border-brown-200 bg-brown-50/40 hover:bg-brown-100/40 cursor-pointer">
+        <input type="checkbox" name="games" value="Para equestrian" class="mt-1 game-checkbox" />
+        <span>Para equestrian</span>
+      </label>
+      <label class="flex items-start gap-3 p-3 rounded-lg border border-brown-200 bg-brown-50/40 hover:bg-brown-100/40 cursor-pointer">
+        <input type="checkbox" name="games" value="Blind football" class="mt-1 game-checkbox" />
+        <span>Blind football</span>
+      </label>
+      <label class="flex items-start gap-3 p-3 rounded-lg border border-brown-200 bg-brown-50/40 hover:bg-brown-100/40 cursor-pointer">
+        <input type="checkbox" name="games" value="Goalball" class="mt-1 game-checkbox" />
+        <span>Goalball</span>
+      </label>
+      <label class="flex items-start gap-3 p-3 rounded-lg border border-brown-200 bg-brown-50/40 hover:bg-brown-100/40 cursor-pointer">
+        <input type="checkbox" name="games" value="Para Cricket" class="mt-1 game-checkbox" />
+        <span>Para Cricket</span>
+      </label>
+      <label class="flex items-start gap-3 p-3 rounded-lg border border-brown-200 bg-brown-50/40 hover:bg-brown-100/40 cursor-pointer">
+        <input type="checkbox" name="games" value="Para judo" class="mt-1 game-checkbox" />
+        <span>Para judo</span>
+      </label>
+      <label class="flex items-start gap-3 p-3 rounded-lg border border-brown-200 bg-brown-50/40 hover:bg-brown-100/40 cursor-pointer">
+        <input type="checkbox" name="games" value="Para powerlifting" class="mt-1 game-checkbox" />
+        <span>Para powerlifting</span>
+      </label>
+      <label class="flex items-start gap-3 p-3 rounded-lg border border-brown-200 bg-brown-50/40 hover:bg-brown-100/40 cursor-pointer">
+        <input type="checkbox" name="games" value="Para rowing" class="mt-1 game-checkbox" />
+        <span>Para rowing</span>
+      </label>
+      <label class="flex items-start gap-3 p-3 rounded-lg border border-brown-200 bg-brown-50/40 hover:bg-brown-100/40 cursor-pointer">
+        <input type="checkbox" name="games" value="Shooting para sport" class="mt-1 game-checkbox" />
+        <span>Shooting para sport</span>
+      </label>
+      <label class="flex items-start gap-3 p-3 rounded-lg border border-brown-200 bg-brown-50/40 hover:bg-brown-100/40 cursor-pointer">
+        <input type="checkbox" name="games" value="Sitting volleyball" class="mt-1 game-checkbox" />
+        <span>Sitting volleyball</span>
+      </label>
+      <label class="flex items-start gap-3 p-3 rounded-lg border border-brown-200 bg-brown-50/40 hover:bg-brown-100/40 cursor-pointer">
+        <input type="checkbox" name="games" value="Para swimming" class="mt-1 game-checkbox" />
+        <span>Para swimming</span>
+      </label>
+      <label class="flex items-start gap-3 p-3 rounded-lg border border-brown-200 bg-brown-50/40 hover:bg-brown-100/40 cursor-pointer">
+        <input type="checkbox" name="games" value="Para table tennis" class="mt-1 game-checkbox" />
+        <span>Para table tennis</span>
+      </label>
+      <label class="flex items-start gap-3 p-3 rounded-lg border border-brown-200 bg-brown-50/40 hover:bg-brown-100/40 cursor-pointer">
+        <input type="checkbox" name="games" value="Para taekwondo" class="mt-1 game-checkbox" />
+        <span>Para taekwondo</span>
+      </label>
+      <label class="flex items-start gap-3 p-3 rounded-lg border border-brown-200 bg-brown-50/40 hover:bg-brown-100/40 cursor-pointer">
+        <input type="checkbox" name="games" value="Para triathlon" class="mt-1 game-checkbox" />
+        <span>Para triathlon</span>
+      </label>
+      <label class="flex items-start gap-3 p-3 rounded-lg border border-brown-200 bg-brown-50/40 hover:bg-brown-100/40 cursor-pointer">
+        <input type="checkbox" name="games" value="Wheelchair basketball" class="mt-1 game-checkbox" />
+        <span>Wheelchair basketball</span>
+      </label>
+      <label class="flex items-start gap-3 p-3 rounded-lg border border-brown-200 bg-brown-50/40 hover:bg-brown-100/40 cursor-pointer">
+        <input type="checkbox" name="games" value="Wheelchair fencing" class="mt-1 game-checkbox" />
+        <span>Wheelchair fencing</span>
+      </label>
+    </div>
+  </fieldset>
+
+  <hr class="my-1 border-brown-700">
+
+  <!-- 📎 DOCUMENT UPLOAD SECTION -->
+  <fieldset class="space-y-4">
+    <legend class="text-xl font-semibold text-brown-800">Upload Documents</legend>
+    <p class="text-sm text-brown-600">Please upload scanned copies of the following documents:</p>
+    <ul class="list-disc list-inside text-sm text-brown-600 space-y-1 ml-4">
+      <li>Proof of Identity (Aadhaar, Passport, etc.)</li>
+      <li>Disability Certificate</li>
+      <li>Medical Certificate (if applicable)</li>
+      <li>Recent Photograph</li>
+    </ul>
+
+    <div class="mt-4">
+      <!-- File Drop Zone -->
+      <div
+        id="file-upload-zone"
+        class="border-2 border-dashed border-brown-300 rounded-lg p-8 text-center bg-brown-50/40 hover:border-brown-400 transition-colors duration-200 cursor-pointer"
+        ondragover="event.preventDefault(); this.classList.add('border-brown-500', 'bg-brown-100/50')"
+        ondragleave="this.classList.remove('border-brown-500', 'bg-brown-100/50')"
+        ondrop="handleDrop(event)"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" class="mx-auto h-10 w-10 text-brown-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1116 8a5 5 0 01-1 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+        </svg>
+        <p class="mt-2 text-sm text-brown-600">
+          <span class="font-medium text-brown-700">Drag & drop</span> files here or click to browse
+        </p>
+        <input
+          type="file"
+          id="document-upload"
+          name="documents[]"
+          multiple
+          accept=".pdf,.jpg,.jpeg,.png,.doc,.docx"
+          class="hidden"
+          onchange="previewFiles(this.files)"
+        />
+      </div>
+
+      <!-- Preview Area -->
+      <div id="file-preview" class="mt-4 space-y-2 hidden">
+        <p class="text-sm font-medium text-brown-700">Uploaded Files:</p>
+        <div id="files-list" class="flex flex-wrap gap-2"></div>
+      </div>
+
+      <!-- Hidden field for form submission -->
+      <input type="hidden" name="uploaded_files" id="uploaded-files-input" value="" />
+    </div>
+  </fieldset>
+
+  <!-- Submit Button -->
+  <div class="flex items-center justify-between pt-2">
+    <p class="text-sm text-brown-700">All fields marked as required must be completed.</p>
+    <button type="submit" class="inline-flex items-center gap-2 rounded-lg bg-brown-700 text-white px-5 py-2.5 hover:bg-brown-800 focus:outline-none focus:ring-2 focus:ring-brown-400">
+      Submit
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M12 5l7 7-7 7"/>
+      </svg>
+    </button>
+  </div>
+</form>
+
+<!-- JavaScript for File Handling -->
+<script>
+  // Handle file drop
+  function handleDrop(e) {
+    e.preventDefault();
+    const files = e.dataTransfer.files;
+    document.getElementById('document-upload').files = files;
+    previewFiles(files);
+  }
+
+  // Preview uploaded files
+  function previewFiles(files) {
+    const previewContainer = document.getElementById('files-list');
+    const filePreview = document.getElementById('file-preview');
+    const hiddenInput = document.getElementById('uploaded-files-input');
+
+    if (files.length === 0) {
+      filePreview.classList.add('hidden');
+      return;
+    }
+
+    previewContainer.innerHTML = '';
+    const fileArray = Array.from(files);
+
+    fileArray.forEach(file => {
+      const li = document.createElement('div');
+      li.className = 'flex items-center gap-2 bg-brown-100/60 px-3 py-1 rounded-md text-xs text-brown-700';
+      li.innerHTML = `
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-brown-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+        </svg>
+        <span>${file.name}</span>
+      `;
+      previewContainer.appendChild(li);
+    });
+
+    // Update hidden input with filenames (comma-separated)
+    const fileNames = fileArray.map(f => f.name).join(',');
+    hiddenInput.value = fileNames;
+
+    filePreview.classList.remove('hidden');
+  }
+
+  // Trigger file browse when clicking the zone
+  document.getElementById('file-upload-zone').addEventListener('click', () => {
+    document.getElementById('document-upload').click();
+  });
+
+  // Optional: Add validation
+  function handleSubmit(e) {
+    const files = document.getElementById('document-upload').files;
+    if (files.length === 0) {
+      alert('Please upload at least one document.');
+      e.preventDefault();
+    }
+  }
+</script>
