@@ -22,38 +22,40 @@ class RegistrationsExport implements FromCollection, WithHeadings, WithMapping
 
     public function headings(): array
     {
-        return [
-            'Surname',
-            'Full name',
-            'Father\'s name',
-            'Date Of Birth',
-            'Percentage',
-            'Genter',
-            'Age Group',
-            'Email',
-            'Phone',
-            'Disability Category',
-            'Games',
-            'Documents'
-        ];
+        // Get maximum number of documents to create appropriate headers
+        $maxDocs = 0;
+        foreach ($this->registrations as $reg) {
+            $docCount = count($reg->documents_list);
+            if ($docCount > $maxDocs) {
+                $maxDocs = $docCount;
+            }
+        }
+
+        $headers = ['Name', 'Email', 'Phone', 'Disability Category', 'Games'];
+        
+        // Add document columns
+        for ($i = 1; $i <= $maxDocs; $i++) {
+            $headers[] = "Document " . $i;
+        }
+        
+        return $headers;
     }
 
     public function map($registration): array
     {
-        return [
-            $registration->surname,
+        $row = [
             $registration->athlete_name,
-            $registration->father_name,
-            $registration->dob,
-            $registration->percentage,
-            $registration->gender,
-            $registration->age_group,
             $registration->email,
             $registration->phone,
             $registration->disability,
             $registration->games_list,
-            // implode(', ', array_map('basename', $registration->documents_list))
-            implode(', ', $registration->documents_list)
         ];
+
+        // Add document URLs
+        foreach ($registration->documents_list as $docUrl) {
+            $row[] = $docUrl; // Full public URL
+        }
+
+        return $row;
     }
 }

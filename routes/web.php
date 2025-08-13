@@ -7,6 +7,10 @@ use App\Http\Controllers\register\admin\adminRegister;
 Route::get('/', function () {
     return view('main.main');
 });
+
+Route::get('/slider', function () {
+    return view('main.slider');
+});
 Route::get('/admin', [adminRegister::class,'adminRegistrations']);
 
 Route::post('/register', [RegisterController::class, 'regitserPost'])->name('main.register.post');
@@ -14,3 +18,5 @@ Route::post('/register', [RegisterController::class, 'regitserPost'])->name('mai
 
 
 Route::get('/register',[RegisterController::class,'registerShow'])->name('main.register');
+
+

@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -120,189 +119,181 @@
                             </div>
                         </div>
                     </div>
-<div class="bg-white rounded-xl shadow border border-brown-100 overflow-hidden p-3 my-3">
-        <h2 class="text-lg font-semibold text-brown-800">Registration Details</h2>
 
-</div>
                     <!-- Registrations Table -->
-                
-<div class="bg-white rounded-xl shadow border border-brown-100 overflow-hidden">
-    <div class="px-4 sm:px-6 py-4 border-b border-brown-100 flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3">
-        <h3 class="text-lg font-semibold text-brown-800">Registration Details</h3>
-        <form method="GET" class="flex flex-col sm:flex-row sm:items-center gap-3 w-full sm:w-auto">
-            <div class="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
-                <div class="relative w-full sm:w-auto">
-                    <input type="text" name="search" placeholder="Search..." value="{{ request('search') }}" class="w-full sm:w-auto pl-10 pr-4 py-2 border border-brown-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brown-500 focus:border-transparent text-sm">
-                    <i class="fas fa-search absolute left-3 top-3 text-brown-400 text-sm"></i>
-                </div>
-                <div class="flex flex-wrap gap-2 w-full sm:w-auto">
-                    <!-- Disability Category Dropdown -->
-                    <select name="disability_filter" class="w-full sm:w-auto max-w-md pl-3 pr-8 py-2 border border-brown-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brown-500 focus:border-transparent bg-white text-sm">
-                        <option value="">All Categories</option>
-                        @foreach($disability as $key => $value)
-                            <option value="{{$value}}" {{ request('disability_filter') == $value ? 'selected' : '' }}>{{$value}}</option>
-                        @endforeach
-                    </select>
+                    <div class="bg-white rounded-xl shadow border border-brown-100 overflow-hidden">
+                        <div class="px-4 sm:px-6 py-4 border-b border-brown-100">
+                            <h3 class="text-lg font-semibold text-brown-800 mb-3">Registration Details</h3>
+                            
+                            <form method="GET" class="flex flex-col gap-3">
+                                <!-- First row: Search and Filters -->
+                                <div class="flex flex-col md:flex-row gap-3">
+                                    <div class="relative flex-grow">
+                                        <input type="text" name="search" placeholder="Search..." value="{{ request('search') }}" class="w-full pl-10 pr-4 py-2 border border-brown-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brown-500 focus:border-transparent text-sm">
+                                        <i class="fas fa-search absolute left-3 top-3 text-brown-400 text-sm"></i>
+                                    </div>
+                                    
+                                    <div class="flex flex-col sm:flex-row gap-2 flex-shrink-0">
+                                        <!-- Disability Category Dropdown -->
+                                        <select name="disability_filter" class="w-full sm:w-48 md:w-40 lg:w-48 pl-3 pr-8 py-2 border border-brown-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brown-500 focus:border-transparent bg-white text-sm">
+                                            <option value="">All Categories</option>
+                                            @foreach($disability as $key => $value)
+                                                <option value="{{$value}}" {{ request('disability_filter') == $value ? 'selected' : '' }}>{{$value}}</option>
+                                            @endforeach
+                                        </select>
 
-                    <!-- Games Dropdown -->
-                    <select name="game_filter" class="w-full sm:w-auto max-w-md pl-3 pr-8 py-2 border border-brown-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brown-500 focus:border-transparent bg-white text-sm">
-                        <option value="">All Games</option>
-                        @foreach($game as $key => $value)
-                            <option value="{{$key}}" {{ request('game_filter') == $key ? 'selected' : '' }}>{{$value}}</option>
-                        @endforeach
-                    </select>
-                </div>
-            </div>
-            <div class="flex gap-2">
-                <button type="submit" class="bg-brown-600 hover:bg-brown-700 text-white px-3 py-2 rounded-lg flex items-center text-sm transition-colors whitespace-nowrap">
-                    <i class="fas fa-filter mr-1 sm:mr-2"></i> 
-                    <span class="text-xs sm:text-sm">Filter</span>
-                </button>
-                <a href="{{ request()->url() }}" class="bg-gray-500 hover:bg-gray-600 text-white px-3 py-2 rounded-lg flex items-center text-sm transition-colors whitespace-nowrap">
-                    <i class="fas fa-times mr-1 sm:mr-2"></i> 
-                    <span class="text-xs sm:text-sm">Clear</span>
-                </a>
-
-
-                <button type="button" onclick="exportToExcel()" class="bg-green-600 hover:bg-green-700 text-white px-3 py-2 rounded-lg flex items-center text-sm transition-colors whitespace-nowrap">
-    <i class="fas fa-file-excel mr-1 sm:mr-2"></i> 
-    <span class="text-xs sm:text-sm">Excel</span>
-</button>
-                {{-- <button type="button" onclick="exportToExcel()" class="bg-green-600 hover:bg-green-700 text-white px-3 py-2 rounded-lg flex items-center text-sm transition-colors whitespace-nowrap">
-                    <i class="fas fa-file-excel mr-1 sm:mr-2"></i> 
-                    <span class="text-xs sm:text-sm">Excel</span>
-                </button> --}}
-            </div>
-        </form>
-    </div>
-    
-    <!-- Responsive Table -->
-    <div class="overflow-x-auto">
-        <table class="min-w-full divide-y divide-brown-200">
-            <thead class="bg-brown-50">
-                <tr>
-                    <th class="px-4 sm:px-6 py-3 text-left text-xs font-medium text-brown-500 uppercase tracking-wider">Name</th>
-                    <th class="px-4 sm:px-6 py-3 text-left text-xs font-medium text-brown-500 uppercase tracking-wider">Email</th>
-                    <th class="px-4 sm:px-6 py-3 text-left text-xs font-medium text-brown-500 uppercase tracking-wider">Phone</th>
-                    <th class="px-4 sm:px-6 py-3 text-left text-xs font-medium text-brown-500 uppercase tracking-wider">Disability Category</th>
-                    <th class="px-4 sm:px-6 py-3 text-left text-xs font-medium text-brown-500 uppercase tracking-wider">Games</th>
-                    <th class="px-4 sm:px-6 py-3 text-left text-xs font-medium text-brown-500 uppercase tracking-wider">Documents</th>
-                </tr>
-            </thead>
-            <tbody class="bg-white divide-y divide-brown-200">
-                @forelse($registrations as $index => $registration)
-                    <tr class="{{ $index % 2 === 1 ? 'bg-brown-50' : '' }}">
-                        <td class="px-4 sm:px-6 py-4 whitespace-nowrap">
-                            <div class="text-sm font-medium text-brown-900">{{ $registration->athlete_name }}</div>
-                        </td>
-                        <td class="px-4 sm:px-6 py-4 whitespace-nowrap text-sm text-brown-500">
-                            {{ $registration->email }}
-                        </td>
-                        <td class="px-4 sm:px-6 py-4 whitespace-nowrap text-sm text-brown-500">
-                            {{ $registration->phone }}
-                        </td>
-                        <td class="px-4 sm:px-6 py-4 whitespace-nowrap">
-                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-amber-100 text-amber-800">
-                                {{ $registration->disability }}
-                            </span>
-                        </td>
-                        <td class="px-4 sm:px-6 py-4 text-sm text-brown-500">
-                            <div>{{ $registration->games_list }}</div>
-                        </td>
-                        <td class="px-4 sm:px-6 py-4 whitespace-nowrap text-sm text-brown-500">
-                            <div class="flex flex-wrap gap-1">
-                                @foreach($registration->documents_list as $docUrl)
-                                    <a href="{{ $docUrl }}" target="_blank" class="px-2 py-1 bg-brown-100 rounded text-xs">
-                                        {{ basename($docUrl) }}
+                                        <!-- Games Dropdown -->
+                                        <select name="game_filter" class="w-full sm:w-48 md:w-40 lg:w-48 pl-3 pr-8 py-2 border border-brown-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brown-500 focus:border-transparent bg-white text-sm">
+                                            <option value="">All Games</option>
+                                            @foreach($game as $key => $value)
+                                                <option value="{{$key}}" {{ request('game_filter') == $key ? 'selected' : '' }}>{{$value}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                
+                                <!-- Second row: Action Buttons -->
+                                <div class="flex flex-wrap gap-2">
+                                    <button type="submit" class="bg-brown-600 hover:bg-brown-700 text-white px-4 py-2 rounded-lg flex items-center text-sm transition-colors">
+                                        <i class="fas fa-filter mr-2"></i> 
+                                        <span>Filter</span>
+                                    </button>
+                                    <a href="{{ request()->url() }}" class="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-lg flex items-center text-sm transition-colors">
+                                        <i class="fas fa-times mr-2"></i> 
+                                        <span>Clear</span>
                                     </a>
-                                @endforeach
+                                    <button type="button" onclick="exportToExcel()" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg flex items-center text-sm transition-colors">
+                                        <i class="fas fa-file-excel mr-2"></i> 
+                                        <span>Excel</span>
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                        
+                        <!-- Responsive Table -->
+                        <div class="overflow-x-auto">
+                            <table class="min-w-full divide-y divide-brown-200">
+                                <thead class="bg-brown-50">
+                                    <tr>
+                                        <th class="px-4 sm:px-6 py-3 text-left text-xs font-medium text-brown-500 uppercase tracking-wider">Name</th>
+                                        <th class="px-4 sm:px-6 py-3 text-left text-xs font-medium text-brown-500 uppercase tracking-wider">Email</th>
+                                        <th class="px-4 sm:px-6 py-3 text-left text-xs font-medium text-brown-500 uppercase tracking-wider">Phone</th>
+                                        <th class="px-4 sm:px-6 py-3 text-left text-xs font-medium text-brown-500 uppercase tracking-wider">Disability Category</th>
+                                        <th class="px-4 sm:px-6 py-3 text-left text-xs font-medium text-brown-500 uppercase tracking-wider">Games</th>
+                                        <th class="px-4 sm:px-6 py-3 text-left text-xs font-medium text-brown-500 uppercase tracking-wider">Documents</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="bg-white divide-y divide-brown-200">
+                                    @forelse($registrations as $index => $registration)
+                                        <tr class="{{ $index % 2 === 1 ? 'bg-brown-50' : '' }}">
+                                            <td class="px-4 sm:px-6 py-4 whitespace-nowrap">
+                                                <div class="text-sm font-medium text-brown-900">{{ $registration->athlete_name }}</div>
+                                            </td>
+                                            <td class="px-4 sm:px-6 py-4 whitespace-nowrap text-sm text-brown-500">
+                                                {{ $registration->email }}
+                                            </td>
+                                            <td class="px-4 sm:px-6 py-4 whitespace-nowrap text-sm text-brown-500">
+                                                {{ $registration->phone }}
+                                            </td>
+                                            <td class="px-4 sm:px-6 py-4 whitespace-nowrap">
+                                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-amber-100 text-amber-800">
+                                                    {{ $registration->disability }}
+                                                </span>
+                                            </td>
+                                            <td class="px-4 sm:px-6 py-4 text-sm text-brown-500">
+                                                <div>{{ $registration->games_list }}</div>
+                                            </td>
+                                            <td class="px-4 sm:px-6 py-4 whitespace-nowrap text-sm text-brown-500">
+                                                <div class="flex flex-wrap gap-1">
+                                                    @foreach($registration->documents_list as $docUrl)
+                                                        <a href="{{ $docUrl }}" target="_blank" class="px-2 py-1 bg-brown-100 rounded text-xs">
+                                                            {{ basename($docUrl) }}
+                                                        </a>
+                                                    @endforeach
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    @empty
+                                        <tr>
+                                            <td colspan="6" class="px-4 sm:px-6 py-4 text-center text-sm text-brown-500">
+                                                No registrations found.
+                                            </td>
+                                        </tr>
+                                    @endforelse
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="px-4 sm:px-6 py-4 border-t border-brown-100 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+                            <div class="text-sm text-brown-500">
+                                Showing {{ $registrations->firstItem() }} to {{ $registrations->lastItem() }} of {{ $registrations->total() }} results
                             </div>
-                        </td>
-                    </tr>
-                @empty
-                    <tr>
-                        <td colspan="6" class="px-4 sm:px-6 py-4 text-center text-sm text-brown-500">
-                            No registrations found.
-                        </td>
-                    </tr>
-                @endforelse
-            </tbody>
-        </table>
-    </div>
+                            <div class="flex space-x-2 justify-center sm:justify-end">
+                                <!-- Custom Styled Pagination -->
+                                @if ($registrations->hasPages())
+                                    <nav role="navigation" aria-label="Pagination Navigation" class="flex items-center justify-between">
+                                        <div class="flex items-center gap-1">
+                                            {{-- Previous Page Link --}}
+                                            @if ($registrations->onFirstPage())
+                                                <span class="px-3 py-1 rounded-md bg-brown-100 text-brown-400 cursor-not-allowed text-sm">
+                                                    Previous
+                                                </span>
+                                            @else
+                                                <a href="{{ $registrations->previousPageUrl() }}" class="px-3 py-1 rounded-md bg-brown-100 text-brown-700 hover:bg-brown-200 transition-colors text-sm">
+                                                    Previous
+                                                </a>
+                                            @endif
 
-    <div class="px-4 sm:px-6 py-4 border-t border-brown-100 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
-        <div class="text-sm text-brown-500">
-            Showing {{ $registrations->firstItem() }} to {{ $registrations->lastItem() }} of {{ $registrations->total() }} results
-        </div>
-        <div class="flex space-x-2 justify-center sm:justify-end">
-            <!-- Custom Styled Pagination -->
-            @if ($registrations->hasPages())
-                <nav role="navigation" aria-label="Pagination Navigation" class="flex items-center justify-between">
-                    <div class="flex items-center gap-1">
-                        {{-- Previous Page Link --}}
-                        @if ($registrations->onFirstPage())
-                            <span class="px-3 py-1 rounded-md bg-brown-100 text-brown-400 cursor-not-allowed text-sm">
-                                Previous
-                            </span>
-                        @else
-                            <a href="{{ $registrations->previousPageUrl() }}" class="px-3 py-1 rounded-md bg-brown-100 text-brown-700 hover:bg-brown-200 transition-colors text-sm">
-                                Previous
-                            </a>
-                        @endif
+                                            {{-- Pagination Elements --}}
+                                            @foreach ($registrations->links()->elements as $element)
+                                                {{-- "Three Dots" Separator --}}
+                                                @if (is_string($element))
+                                                    <span class="px-3 py-1 rounded-md bg-brown-50 text-brown-500 text-sm">{{ $element }}</span>
+                                                @endif
 
-                        {{-- Pagination Elements --}}
-                        @foreach ($registrations->links()->elements as $element)
-                            {{-- "Three Dots" Separator --}}
-                            @if (is_string($element))
-                                <span class="px-3 py-1 rounded-md bg-brown-50 text-brown-500 text-sm">{{ $element }}</span>
-                            @endif
+                                                {{-- Array Of Links --}}
+                                                @if (is_array($element))
+                                                    @foreach ($element as $page => $url)
+                                                        @if ($page == $registrations->currentPage())
+                                                            <span class="px-3 py-1 rounded-md bg-brown-600 text-white text-sm">{{ $page }}</span>
+                                                        @else
+                                                            <a href="{{ $url }}" class="px-3 py-1 rounded-md bg-brown-100 text-brown-700 hover:bg-brown-200 transition-colors text-sm">{{ $page }}</a>
+                                                        @endif
+                                                    @endforeach
+                                                @endif
+                                            @endforeach
 
-                            {{-- Array Of Links --}}
-                            @if (is_array($element))
-                                @foreach ($element as $page => $url)
-                                    @if ($page == $registrations->currentPage())
-                                        <span class="px-3 py-1 rounded-md bg-brown-600 text-white text-sm">{{ $page }}</span>
-                                    @else
-                                        <a href="{{ $url }}" class="px-3 py-1 rounded-md bg-brown-100 text-brown-700 hover:bg-brown-200 transition-colors text-sm">{{ $page }}</a>
-                                    @endif
-                                @endforeach
-                            @endif
-                        @endforeach
-
-                        {{-- Next Page Link --}}
-                        @if ($registrations->hasMorePages())
-                            <a href="{{ $registrations->nextPageUrl() }}" class="px-3 py-1 rounded-md bg-brown-100 text-brown-700 hover:bg-brown-200 transition-colors text-sm">
-                                Next
-                            </a>
-                        @else
-                            <span class="px-3 py-1 rounded-md bg-brown-100 text-brown-400 cursor-not-allowed text-sm">
-                                Next
-                            </span>
-                        @endif
+                                            {{-- Next Page Link --}}
+                                            @if ($registrations->hasMorePages())
+                                                <a href="{{ $registrations->nextPageUrl() }}" class="px-3 py-1 rounded-md bg-brown-100 text-brown-700 hover:bg-brown-200 transition-colors text-sm">
+                                                    Next
+                                                </a>
+                                            @else
+                                                <span class="px-3 py-1 rounded-md bg-brown-100 text-brown-400 cursor-not-allowed text-sm">
+                                                    Next
+                                                </span>
+                                            @endif
+                                        </div>
+                                    </nav>
+                                @endif
+                            </div>
+                        </div>
                     </div>
-                </nav>
-            @endif
-        </div>
-    </div>
-</div>
-
-<script>
-function exportToExcel() {
-    // Get current URL parameters
-    const urlParams = new URLSearchParams(window.location.search);
-    urlParams.set('export', 'excel');
-    
-    // Redirect to the same page with export parameter
-    window.location.href = window.location.pathname + '?' + urlParams.toString();
-}
-</script>
-
                 </div>
             </main>
         </div>
     </div>
 
     <script>
+        function exportToExcel() {
+            // Get current URL parameters
+            const urlParams = new URLSearchParams(window.location.search);
+            urlParams.set('export', 'excel');
+            
+            // Redirect to the same page with export parameter
+            window.location.href = window.location.pathname + '?' + urlParams.toString();
+        }
+        
         // Mobile menu toggle
         const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
         const sidebar = document.getElementById('sidebar');
