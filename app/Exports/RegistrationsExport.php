@@ -52,7 +52,8 @@ class RegistrationsExport implements FromCollection, WithHeadings, WithMapping
             $registration->phone,
             $registration->disability,
             $registration->games_list,
-            implode(', ', array_map('basename', $registration->documents_list))
+            // implode(', ', array_map('basename', $registration->documents_list))
+            implode(', ', $registration->documents_list)
         ];
     }
 }
