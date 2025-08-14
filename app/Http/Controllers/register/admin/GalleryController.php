@@ -11,6 +11,13 @@ use RealRashid\SweetAlert\Facades\Alert;
 class GalleryController extends Controller
 {
     //
+    public function index()
+{
+    // Fetch active gallery images, ordered by order_index
+    $galleries = Gallery::orderBy('created_at', 'desc')->get();
+    dd($galleries);
+    return view('components.homepage.gallery', compact('galleries'));
+}
 
     public function galleryPost(Request $request)
     {
