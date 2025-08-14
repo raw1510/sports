@@ -10,8 +10,8 @@ Route::get('/', [HomepageController::class,'frontendSlider']);
 
 
 
-Route::get('/admin', [adminRegister::class,'adminRegistrations']);
-Route::get('/admin/slider',[SliderController::class,'index']);
+Route::get('/admin', [adminRegister::class,'adminRegistrations'])->name('admin.registrations');
+Route::get('/admin/slider',[SliderController::class,'index'])->name('admin.sidebar');
 Route::post('/admin/slider/post', [SliderController::class,'sliderPost'])->name('admin.slider.post');
 
 

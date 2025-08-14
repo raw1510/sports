@@ -31,32 +31,9 @@
 </head>
 <body class="min-h-screen bg-brown-50 text-brown-900">
     <div class="flex h-screen overflow-hidden">
-        <!-- Mobile menu backdrop -->
-        <div id="mobile-menu-backdrop" class="fixed inset-0 z-20 bg-black bg-opacity-50 hidden lg:hidden"></div>
-        
+        <!-- Mobile menu backdrop -->        
         <!-- Sidebar -->
-        <div id="sidebar" class="fixed inset-y-0 left-0 z-30 w-64 bg-brown-800 text-white transform -translate-x-full transition-transform duration-300 ease-in-out lg:translate-x-0 lg:static lg:inset-0">
-            <div class="p-5 border-b border-brown-700 flex items-center justify-between">
-                <h1 class="text-xl font-bold">Para Sports Admin</h1>
-                <button id="sidebar-close" class="lg:hidden text-white hover:text-brown-200">
-                    <i class="fas fa-times text-xl"></i>
-                </button>
-            </div>
-            <nav class="mt-5">
-                <a href="#" class="flex items-center px-5 py-3 bg-brown-700 border-l-4 border-amber-500 hover:bg-brown-600">
-                    <i class="fas fa-users mr-3"></i> 
-                    <span class="hidden sm:inline text-white">Registrations</span>
-                </a>
-                <a href="#" class="flex items-center px-5 py-3 text-brown-200 hover:bg-brown-700 transition-colors">
-                    <i class="fas fa-chart-bar mr-3"></i> 
-                    <span class="hidden sm:inline text-white">Reports</span>
-                </a>
-                <a href="#" class="flex items-center px-5 py-3 text-brown-200 hover:bg-brown-700 transition-colors">
-                    <i class="fas fa-cog mr-3"></i> 
-                    <span class="hidden sm:inline text-white">Settings</span>
-                </a>
-            </nav>
-        </div>
+        @include('components.admin.navbar')
 
         <!-- Main Content -->
         <div class="flex-1 flex flex-col overflow-hidden">
@@ -294,34 +271,9 @@
             window.location.href = window.location.pathname + '?' + urlParams.toString();
         }
         
-        // Mobile menu toggle
-        const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
-        const sidebar = document.getElementById('sidebar');
-        const mobileMenuBackdrop = document.getElementById('mobile-menu-backdrop');
-        const sidebarClose = document.getElementById('sidebar-close');
-
-        function openMobileMenu() {
-            sidebar.classList.remove('-translate-x-full');
-            mobileMenuBackdrop.classList.remove('hidden');
-            document.body.classList.add('overflow-hidden');
-        }
-
-        function closeMobileMenu() {
-            sidebar.classList.add('-translate-x-full');
-            mobileMenuBackdrop.classList.add('hidden');
-            document.body.classList.remove('overflow-hidden');
-        }
-
-        mobileMenuToggle.addEventListener('click', openMobileMenu);
-        sidebarClose.addEventListener('click', closeMobileMenu);
-        mobileMenuBackdrop.addEventListener('click', closeMobileMenu);
-
-        // Close mobile menu on window resize if screen becomes large
-        window.addEventListener('resize', () => {
-            if (window.innerWidth >= 1024) {
-                closeMobileMenu();
-            }
-        });
+    
     </script>
+    @vite('resources/js/adminnavbar.js')
+
 </body>
 </html>
