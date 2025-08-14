@@ -9,40 +9,24 @@
     </div>
 
     <!-- Slide 1 -->
-    <div class="absolute inset-0 transition-opacity duration-700 ease-in-out opacity-100 slide" data-index="0">
-      <picture>
-        <source srcset="https://images.unsplash.com/photo-1547347298-4074fc3086f0?fm=webp&q=80&w=1600&fit=crop" type="image/webp">
-        <img src="https://images.unsplash.com/photo-1547347298-4074fc3086f0?auto=format&fit=crop&w=1470&q=80" alt="Paralympic athletes celebrating" class="w-full h-full object-cover" loading="lazy" decoding="async">
-      </picture>
-      <div class="absolute inset-0 bg-gradient-to-t from-amber-900/80 to-amber-900/30 flex flex-col items-center justify-end text-center p-6">
-        <h1 id="hero-heading" class="text-white text-2xl md:text-4xl font-bold mb-2">Empowering Para Athletes</h1>
-        <p class="text-amber-100 text-base md:text-lg max-w-3xl">Supporting athletes to achieve excellence on the global stage.</p>
-      </div>
-    </div>
+    @foreach($sliderImages as $sliderImage)
 
-    <!-- Slide 2 -->
-    <div class="absolute inset-0 transition-opacity duration-700 ease-in-out opacity-0 slide" data-index="1" aria-hidden="true">
-      <picture>
-        <source srcset="https://images.unsplash.com/photo-1541534741688-6078c6bfb5c5?fm=webp&q=80&w=1600&fit=crop" type="image/webp">
-        <img src="https://images.unsplash.com/photo-1541534741688-6078c6bfb5c5?auto=format&fit=crop&w=1469&q=80" alt="Team India para athletes" class="w-full h-full object-cover" loading="lazy" decoding="async">
-      </picture>
-      <div class="absolute inset-0 bg-gradient-to-t from-amber-900/80 to-amber-900/30 flex flex-col items-center justify-end text-center p-6">
-        <h2 class="text-white text-2xl md:text-4xl font-bold mb-2">Team India</h2>
-        <p class="text-amber-100 text-base md:text-lg max-w-3xl">Celebrating our champions at international events.</p>
+      <div class="absolute inset-0 transition-opacity duration-700 ease-in-out opacity-100 slide" data-index="0">
+        <picture>
+          <source srcset="{{ asset($sliderImage->image_path) }}" type="image/webp">
+          <img src="{{ asset($sliderImage->image_path) }}" alt="Paralympic athletes celebrating" class="w-full h-full object-cover" loading="lazy" decoding="async">
+        </picture>
+        <div class="absolute inset-0 bg-gradient-to-t from-amber-900/80 to-amber-900/30 flex flex-col items-center justify-end text-center p-6">
+          <h1 id="hero-heading" class="text-white text-2xl md:text-4xl font-bold mb-2">{{ $sliderImage->title }}</h1>
+          <p class="text-amber-100 text-base md:text-lg max-w-3xl">{{ $sliderImage->description }}</p>
+        </div>
       </div>
-    </div>
+    @endforeach
+    <!-- Slide 2 -->
+  
 
     <!-- Slide 3 -->
-    <div class="absolute inset-0 transition-opacity duration-700 ease-in-out opacity-0 slide" data-index="2" aria-hidden="true">
-      <picture>
-        <source srcset="https://images.unsplash.com/photo-1552674605-db6ffd4facb5?fm=webp&q=80&w=1600&fit=crop" type="image/webp">
-        <img src="https://images.unsplash.com/photo-1552674605-db6ffd4facb5?auto=format&fit=crop&w=1470&q=80" alt="Training camp for athletes" class="w-full h-full object-cover" loading="lazy" decoding="async">
-      </picture>
-      <div class="absolute inset-0 bg-gradient-to-t from-amber-900/80 to-amber-900/30 flex flex-col items-center justify-end text-center p-6">
-        <h2 class="text-white text-2xl md:text-4xl font-bold mb-2">Training Camps</h2>
-        <p class="text-amber-100 text-base md:text-lg max-w-3xl">World-class facilities for our athletes.</p>
-      </div>
-    </div>
+    
   </div>
 </section>
 
