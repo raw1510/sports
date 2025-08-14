@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\register\RegisterController;
 use App\Http\Controllers\register\admin\adminRegister;
 use App\Http\Controllers\register\admin\SliderController;
+use App\Http\Controllers\register\admin\GalleryController;
+
 use App\Http\Controllers\HomepageController;
 
 Route::get('/', [HomepageController::class,'frontendSlider']);
@@ -13,6 +15,8 @@ Route::get('/', [HomepageController::class,'frontendSlider']);
 Route::get('/admin', [adminRegister::class,'adminRegistrations'])->name('admin.registrations');
 Route::get('/admin/slider',[SliderController::class,'index'])->name('admin.sidebar');
 Route::post('/admin/slider/post', [SliderController::class,'sliderPost'])->name('admin.slider.post');
+Route::post('/admin/gallery/post', [GalleryController::class,'galleryPost'])->name('admin.gallery.post');
+
 
 
 

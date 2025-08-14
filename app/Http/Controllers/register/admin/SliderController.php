@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\SliderImage;
 use Illuminate\Support\Facades\Validator;
+use App\Models\Gallery;
 
 class SliderController extends Controller
 {
@@ -78,6 +79,10 @@ public function sliderPost(Request $request)
         return redirect()->back()->withErrors(['error' => 'Failed to upload image. Please try again.'])->withInput();
     }
 }
+
+
+
+
 
 
     //working images 

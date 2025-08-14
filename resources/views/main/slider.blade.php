@@ -166,7 +166,7 @@
                                 </h3>
                             </div>
                             <div class="p-6">
-                                <form action="#" method="POST" enctype="multipart/form-data" class="flex flex-col sm:flex-row gap-4">
+                                <form action="{{ route('admin.gallery.post') }}" method="POST" enctype="multipart/form-data" class="flex flex-col sm:flex-row gap-4">
                                     @csrf
 
                                     <div class="flex-grow">
@@ -177,7 +177,7 @@
 
                                         <div class="mb-4">
                                             <label for="gallery_description" class="block text-sm font-medium text-brown-700 mb-2">Description (Optional)</label>
-                                            <input type="text" id="gallery_description" name="description_gallery" class="w-full px-4 py-2 border border-brown-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brown-500 focus:border-transparent" placeholder="e.g., Athletes in training">
+                                            <input type="text" id="gallery_description" name="gallery_description" class="w-full px-4 py-2 border border-brown-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brown-500 focus:border-transparent" placeholder="e.g., Athletes in training">
                                         </div>
 
                                         <div>
@@ -192,7 +192,7 @@
                                                     <input type="file" id="gallery_image" name="gallery_image" class="hidden" required />
                                                 </label>
                                             </div>
-                                            @error('image')
+                                            @error('gallery_image')
                                                 <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                                             @enderror
                                         </div>
