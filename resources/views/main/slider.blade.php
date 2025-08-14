@@ -36,6 +36,7 @@
     
     <!-- Font Awesome CDN -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
     
     <style>
         /* For the reorder handles */
@@ -213,8 +214,9 @@
             </main>
         </div>
     </div>
+    @include('sweetalert::alert')
 
     <!-- If using Vite for navbar JS, place this before closing body tag -->
-    @vite('resources/js/adminnavbar.js')
+        @vite('resources/js/adminnavbar.js')
 </body>
 </html>

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Gallery;
 use Illuminate\Support\Facades\Validator;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class GalleryController extends Controller
 {
@@ -58,15 +59,17 @@ class GalleryController extends Controller
                 $galleryImage->order_index = $newOrderIndex;
                 $galleryImage->save();
 
-                return redirect()->back()->with('gallery_success', 'Gallery image uploaded successfully!');
+                Alert::success('Success', 'Gallery image uploaded successfully!');
+                return redirect()->back();
             } else {
+                Alert::error('Error', 'No image file was uploaded.');
                 return redirect()->back()->withErrors(['gallery_image' => 'No image file was uploaded.'])->withInput();
             }
 
         } catch (\Exception $e) {
             // Log the error for debugging (optional)
             // \Log::error('Gallery image upload failed: ' . $e->getMessage());
-            
+            Alert::error('Error', 'Failed to upload gallery image. Please try again.');
             return redirect()->back()->withErrors(['gallery_error' => 'Failed to upload gallery image. Please try again.'])->withInput();
         }
     }

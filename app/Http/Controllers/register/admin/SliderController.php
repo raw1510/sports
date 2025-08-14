@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\SliderImage;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Gallery;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class SliderController extends Controller
 {
@@ -70,12 +71,15 @@ public function sliderPost(Request $request)
             $sliderImage->order_index = $newOrderIndex;
             $sliderImage->save();
 
+            Alert::success('Success', 'Slider image uploaded successfully!');
             return redirect()->back()->with('success', 'Slider image uploaded successfully!');
         } else {
+            Alert::error('Error', 'No image file was uploaded.');
             return redirect()->back()->withErrors(['image' => 'No image file was uploaded.'])->withInput();
         }
 
     } catch (\Exception $e) {
+        Alert::error('Error', 'Failed to upload image. Please try again.');
         return redirect()->back()->withErrors(['error' => 'Failed to upload image. Please try again.'])->withInput();
     }
 }
