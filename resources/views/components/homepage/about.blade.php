@@ -8,8 +8,9 @@
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
           <div>
             <picture>
-              <source srcset="https://images.unsplash.com/photo-1541534741688-6078c6bfb5c5?fm=webp&q=80&w=1200&fit=crop" type="image/webp">
-              <img src="https://images.unsplash.com/photo-1541534741688-6078c6bfb5c5?auto=format&fit=crop&w=1469&q=80" alt="PCI Team" class="rounded-lg shadow-lg w-full object-cover hover:shadow-xl transition-shadow duration-300" loading="lazy" decoding="async">
+              <source srcset="{{ asset('images/about.webp') }}" type="image/webp">
+              <img src="{{ asset('images/about.webp') }}" alt="PCI Team" class="rounded-lg shadow-lg w-full object-cover hover:shadow-xl transition-shadow duration-300" loading="lazy" decoding="async">
+
             </picture>
           </div>
 
