@@ -21,7 +21,8 @@ class DatabaseSeeder extends Seeder
         // ]);
         $this->call([
             GamesTableSeeder::class,
-            DisabilityTableSeeder::class
+            DisabilityTableSeeder::class,
+            AdminUserSeeder::class
         ]);
     }
 }
