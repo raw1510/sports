@@ -5,11 +5,15 @@ namespace App\Http\Controllers\register;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Registration;
+use App\Models\PendingRegistration;
+use App\Models\PendingRegisterGame;
+use App\Models\PendingDocument;
 use App\Models\RegisterGame;
 use App\Models\Game;
 use App\Models\Disability;
 use App\Models\Document;
 use Illuminate\Support\Facades\DB;
+
 
 class RegisterController extends Controller
 {
@@ -53,7 +57,7 @@ public function regitserPost(Request $request)
 
     DB::transaction(function () use ($validated, $request) {
         // 1️⃣ Create main register record
-        $register = Registration::create([
+        $register = PendingRegistration::create([
             'surname'      => $validated['surname'],
             'athlete_name' => $validated['athlete_name'],
             'father_name'  => $validated['father_name'],
@@ -69,8 +73,8 @@ public function regitserPost(Request $request)
         // dd($register);
 
         foreach ($validated['games'] as $gameId) {
-            RegisterGame::create([
-                'registration_id' => $register->id,
+            PendingRegisterGame::create([
+                'pending_registration_id' => $register->id,
                 'game_id'     => $gameId,
             ]);
         }
@@ -92,8 +96,8 @@ public function regitserPost(Request $request)
                     $file->move($destinationPath, $filename);
 
                     // Save relative path in DB
-                    Document::create([
-                        'registration_id' => $register->id,
+                    PendingDocument::create([
+                        'pending_registration_id' => $register->id,
                         'document_path'        => 'uploads/documents/' . $filename, // Store relative path
                     ]);
                 }

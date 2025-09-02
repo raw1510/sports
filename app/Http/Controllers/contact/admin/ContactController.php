@@ -11,6 +11,16 @@ use Illuminate\Support\Facades\Log;
 class ContactController extends Controller
 {
     //
+    public function ContactUsFormGet()
+    {
+        $inquiries = ContactInquiry::latest()->paginate(10);
+        return view('admin.AdminContactUS', compact('inquiries'));
+    }
+
+
+
+
+
     public function ContactUsFormPost(Request $request)
     {
         // Validate the request data

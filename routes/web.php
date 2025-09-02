@@ -15,26 +15,27 @@ use App\Http\Controllers\HomepageController;
 
 Route::middleware(['login'])->group(function () {
 
+    Route::get('/', [HomepageController::class,'frontendSlider']);
 
     
     Route::get('/login',[LoginController::class,'showLoginForm'])->name('admin.login');
     Route::post('/login',[LoginController::class,'login'])->name('admin.login.post');
+    Route::post('/logout',[LoginController::class,'logout'])->name('admin.logout');
     
     Route::middleware(['login2'])->group(function () {
         Route::get('/admin', [adminRegister::class,'adminRegistrations'])->name('admin.registrations');
         Route::get('/admin/slider',[SliderController::class,'index'])->name('admin.sidebar');
         Route::post('/admin/slider/post', [SliderController::class,'sliderPost'])->name('admin.slider.post');
-
+        Route::post('/admin/gallery/post', [GalleryController::class,'galleryPost'])->name('admin.gallery.post');
     });
     
     
-    Route::get('/', [HomepageController::class,'frontendSlider']);
 
 
     
     
     
-    Route::post('/admin/gallery/post', [GalleryController::class,'galleryPost'])->name('admin.gallery.post');
+    Route::get('/contact', [ContactController::class, 'ContactUsFormGet'])->name('admin.contact.view');
     Route::post('/contact', [ContactController::class, 'ContactUsFormPost'])->name('contact.submit');
     
     

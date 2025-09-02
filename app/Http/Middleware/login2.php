@@ -22,7 +22,7 @@ class login2
     {
         if (!Auth::check()) {
             return redirect()->route('admin.login')->withErrors([
-                'email' => 'You must be logged in to access this page.',
+                'email' => 'You must be logged in.',
             ]);
         }
         return $next($request);
