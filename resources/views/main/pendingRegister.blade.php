@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pending Registrations - Para Sports Admin Panel</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brown: {
+                            50: '#faf6f2',
+                            100: '#f3ebe3',
+                            200: '#e4d3c3',
+                            300: '#d3b79d',
+                            400: '#b98e6c',
+                            500: '#8b5e34',
+                            600: '#734a27',
+                            700: '#5a3a20',
+                            800: '#422a19',
+                            900: '#2d1d12',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="min-h-screen bg-brown-50 text-brown-900">
+    <div class="flex h-screen overflow-hidden">
+        <!-- Sidebar (assuming this component exists and handles active state) -->
+        @include('components.admin.navbar')
+
+        <!-- Main Content -->
+        <div class="flex-1 flex flex-col overflow-hidden">
+            <!-- Header -->
+            <header class="bg-white shadow-sm border-b border-brown-100">
+                <div class="flex justify-between items-center p-4">
+                    <div class="flex items-center">
+                        <button id="mobile-menu-toggle" class="lg:hidden text-brown-600 hover:text-brown-800 mr-3">
+                            <i class="fas fa-bars text-xl"></i>
+                        </button>
+                        <h2 class="text-xl font-semibold text-brown-800">Pending Registrations</h2>
+                    </div>
+                    <div class="flex items-center space-x-2 sm:space-x-4">
+                        <div class="flex items-center">
+                            <div class="w-8 h-8 rounded-full bg-brown-200 flex items-center justify-center">
+                                <i class="fas fa-user text-brown-700"></i>
+                            </div>
+                            <span class="ml-2 text-brown-700 hidden sm:inline">Admin</span>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Main Content Area -->
+            <main class="flex-1 overflow-x-hidden overflow-y-auto">
+                <div class="p-4 sm:p-6">
+                    <!-- Stats Cards (Optional: Show total pending) -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 mb-6">
+                        <div class="bg-white rounded-xl shadow p-4 sm:p-6 border border-brown-100">
+                            <div class="flex items-center">
+                                <div class="p-3 rounded-lg bg-amber-100 text-amber-600 flex-shrink-0">
+                                    <i class="fas fa-clock text-xl"></i> <!-- Using clock icon for pending -->
+                                </div>
+                                <div class="ml-4 min-w-0">
+                                    <h3 class="text-brown-500 text-sm truncate">Pending Registrations</h3>
+                                    <p class="text-2xl font-bold">{{ $registrations->total() }}</p> <!-- Show total count -->
+                                </div>
+                            </div>
+                        </div>
+                         <!-- You can add more stats cards here if needed (e.g., pending per category) -->
+                    </div>
+
+                    <!-- Pending Registrations Table -->
+                    <div class="bg-white rounded-xl shadow border border-brown-100 overflow-hidden">
+                        <div class="px-4 sm:px-6 py-4 border-b border-brown-100">
+                            <h3 class="text-lg font-semibold text-brown-800 mb-3">Pending Registration Details</h3>
+
+                            <!-- Search Form with Both Filters -->
+                            <form method="GET" class="flex flex-col gap-3">
+                                <!-- First row: Search and Filters -->
+                                <div class="flex flex-col md:flex-row gap-3">
+                                    <div class="relative flex-grow">
+                                        <input type="text" name="search" placeholder="Search pending registrations..." value="{{ request('search') }}" class="w-full pl-10 pr-4 py-2 border border-brown-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brown-500 focus:border-transparent text-sm">
+                                        <i class="fas fa-search absolute left-3 top-3 text-brown-400 text-sm"></i>
+                                    </div>
+
+                                    <div class="flex flex-col sm:flex-row gap-2 flex-shrink-0">
+                                        <!-- Disability Category Dropdown -->
+                                        <select name="disability_filter" class="w-full sm:w-48 md:w-40 lg:w-48 pl-3 pr-8 py-2 border border-brown-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brown-500 focus:border-transparent bg-white text-sm">
+                                            <option value="">All Categories</option>
+                                            @foreach($disability as $key => $value)
+                                                <option value="{{$value}}" {{ request('disability_filter') == $value ? 'selected' : '' }}>{{$value}}</option>
+                                            @endforeach
+                                        </select>
+
+                                        <!-- Games Dropdown -->
+                                        <select name="game_filter" class="w-full sm:w-48 md:w-40 lg:w-48 pl-3 pr-8 py-2 border border-brown-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brown-500 focus:border-transparent bg-white text-sm">
+                                            <option value="">All Games</option>
+                                            @foreach($game as $key => $value)
+                                                <option value="{{$key}}" {{ request('game_filter') == $key ? 'selected' : '' }}>{{$value}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <!-- Second row: Action Buttons -->
+                                <div class="flex flex-wrap gap-2">
+                                    <button type="submit" class="bg-brown-600 hover:bg-brown-700 text-white px-4 py-2 rounded-lg flex items-center text-sm transition-colors">
+                                        <i class="fas fa-filter mr-2"></i>
+                                        <span>Filter</span>
+                                    </button>
+                                    <a href="{{ request()->url() }}" class="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-lg flex items-center text-sm transition-colors">
+                                        <i class="fas fa-times mr-2"></i>
+                                        <span>Clear</span>
+                                    </a>
+                                </div>
+                            </form>
+                        </div>
+
+                        <!-- Responsive Table -->
+                        <div class="overflow-x-auto">
+                            <table class="min-w-full divide-y divide-brown-200">
+                                <thead class="bg-brown-50">
+                                    <tr>
+                                        <th class="px-4 sm:px-6 py-3 text-left text-xs font-medium text-brown-500 uppercase tracking-wider">Name</th>
+                                        <th class="px-4 sm:px-6 py-3 text-left text-xs font-medium text-brown-500 uppercase tracking-wider">Email</th>
+                                        <th class="px-4 sm:px-6 py-3 text-left text-xs font-medium text-brown-500 uppercase tracking-wider">Phone</th>
+                                        <th class="px-4 sm:px-6 py-3 text-left text-xs font-medium text-brown-500 uppercase tracking-wider">Disability Category</th>
+                                        <th class="px-4 sm:px-6 py-3 text-left text-xs font-medium text-brown-500 uppercase tracking-wider">Games</th>
+                                        <th class="px-4 sm:px-6 py-3 text-left text-xs font-medium text-brown-500 uppercase tracking-wider">Documents</th>
+                                        <th class="px-4 sm:px-6 py-3 text-left text-xs font-medium text-brown-500 uppercase tracking-wider">Actions</th> <!-- New Column for Approve/Reject -->
+                                    </tr>
+                                </thead>
+                                <tbody class="bg-white divide-y divide-brown-200">
+                                    @forelse($registrations as $index => $registration)
+                                        <tr class="{{ $index % 2 === 1 ? 'bg-brown-50' : '' }}">
+                                            <td class="px-4 sm:px-6 py-4 whitespace-nowrap">
+                                                <div class="text-sm font-medium text-brown-900">{{ $registration->athlete_name }}</div>
+                                            </td>
+                                            <td class="px-4 sm:px-6 py-4 whitespace-nowrap text-sm text-brown-500">
+                                                {{ $registration->email }}
+                                            </td>
+                                            <td class="px-4 sm:px-6 py-4 whitespace-nowrap text-sm text-brown-500">
+                                                {{ $registration->phone }}
+                                            </td>
+                                            <td class="px-4 sm:px-6 py-4 whitespace-nowrap">
+                                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-amber-100 text-amber-800">
+                                                    {{ $registration->disability }}
+                                                </span>
+                                            </td>
+                                            <td class="px-4 sm:px-6 py-4 text-sm text-brown-500">
+                                                <div>{{ $registration->games_list }}</div>
+                                            </td>
+                                            <td class="px-4 sm:px-6 py-4 whitespace-nowrap text-sm text-brown-500">
+                                                <div class="flex flex-wrap gap-1">
+                                                    @foreach($registration->documents_list as $docUrl)
+                                                        <a href="{{ $docUrl }}" target="_blank" class="px-2 py-1 bg-brown-100 rounded text-xs hover:underline">
+                                                            {{ basename($docUrl) }}
+                                                        </a>
+                                                    @endforeach
+                                                </div>
+                                            </td>
+                                            <td class="px-4 sm:px-6 py-4 whitespace-nowrap text-sm text-brown-500">
+                                                <!-- Action Buttons -->
+                                                <div class="flex space-x-2">
+                                                    <!-- Approve Button -->
+                                                    {{-- <form action="{{ route('admin.pending.approve', $registration->id) }}" method="POST" onsubmit="return confirm('Approve this registration?');"> --}}
+                                                    <form action="{{ route('admin.registrations.acceptOrReject', [$registration->id,'accept']) }}" method="POST" onsubmit="return confirm('Approve this registration?');">
+                                                        @csrf
+                                                        @method('PATCH') {{-- Using PATCH for approval is semantically better --}}
+                                                        <button type="submit" class="bg-green-600 hover:bg-green-700 text-white px-3 py-1 rounded text-xs transition-colors flex items-center">
+                                                            <i class="fas fa-check mr-1"></i> Approve
+                                                        </button>
+                                                    </form>
+
+                                                    <!-- Reject Button -->
+                                                    {{-- <form action="{{ route('admin.pending.reject', $registration->id) }}" method="POST" onsubmit="return confirm('Reject and delete this registration? This cannot be undone.');"> --}}
+                                                    <form action="{{ route('admin.registrations.acceptOrReject',[$registration->id,'reject']) }}" method="POST" onsubmit="return confirm('Reject and delete this registration? This cannot be undone.');">
+                                                        @csrf
+                                                        @method('PATCH')
+                                                        <button type="submit" class="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded text-xs transition-colors flex items-center">
+                                                            <i class="fas fa-times mr-1"></i> Reject
+                                                        </button>
+                                                    </form>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    @empty
+                                        <tr>
+                                            <td colspan="7" class="px-4 sm:px-6 py-4 text-center text-sm text-brown-500">
+                                                No pending registrations found.
+                                            </td>
+                                        </tr>
+                                    @endforelse
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- Pagination -->
+                        <div class="px-4 sm:px-6 py-4 border-t border-brown-100 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+                            <div class="text-sm text-brown-500">
+                                Showing {{ $registrations->firstItem() }} to {{ $registrations->lastItem() }} of {{ $registrations->total() }} results
+                            </div>
+                            <div class="flex space-x-2 justify-center sm:justify-end">
+                                <!-- Custom Styled Pagination -->
+                                @if ($registrations->hasPages())
+                                    <nav role="navigation" aria-label="Pagination Navigation" class="flex items-center justify-between">
+                                        <div class="flex items-center gap-1">
+                                            {{-- Previous Page Link --}}
+                                            @if ($registrations->onFirstPage())
+                                                <span class="px-3 py-1 rounded-md bg-brown-100 text-brown-400 cursor-not-allowed text-sm">
+                                                    Previous
+                                                </span>
+                                            @else
+                                                <a href="{{ $registrations->previousPageUrl() }}" class="px-3 py-1 rounded-md bg-brown-100 text-brown-700 hover:bg-brown-200 transition-colors text-sm">
+                                                    Previous
+                                                </a>
+                                            @endif
+
+                                            {{-- Pagination Elements --}}
+                                            @foreach ($registrations->links()->elements as $element)
+                                                {{-- "Three Dots" Separator --}}
+                                                @if (is_string($element))
+                                                    <span class="px-3 py-1 rounded-md bg-brown-50 text-brown-500 text-sm">{{ $element }}</span>
+                                                @endif
+
+                                                {{-- Array Of Links --}}
+                                                @if (is_array($element))
+                                                    @foreach ($element as $page => $url)
+                                                        @if ($page == $registrations->currentPage())
+                                                            <span class="px-3 py-1 rounded-md bg-brown-600 text-white text-sm">{{ $page }}</span>
+                                                        @else
+                                                            <a href="{{ $url }}" class="px-3 py-1 rounded-md bg-brown-100 text-brown-700 hover:bg-brown-200 transition-colors text-sm">{{ $page }}</a>
+                                                        @endif
+                                                    @endforeach
+                                                @endif
+                                            @endforeach
+
+                                            {{-- Next Page Link --}}
+                                            @if ($registrations->hasMorePages())
+                                                <a href="{{ $registrations->nextPageUrl() }}" class="px-3 py-1 rounded-md bg-brown-100 text-brown-700 hover:bg-brown-200 transition-colors text-sm">
+                                                    Next
+                                                </a>
+                                            @else
+                                                <span class="px-3 py-1 rounded-md bg-brown-100 text-brown-400 cursor-not-allowed text-sm">
+                                                    Next
+                                                </span>
+                                            @endif
+                                        </div>
+                                    </nav>
+                                @endif
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Scripts (if needed, e.g., for mobile menu toggle) -->
+    <script>
+        // Add any necessary JavaScript here, e.g., for the mobile menu toggle
+        document.addEventListener('DOMContentLoaded', function () {
+            const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+            // Assuming there's a sidebar element with an ID like 'sidebar'
+            const sidebar = document.getElementById('sidebar'); // You'll need to add this ID to your sidebar include
+
+            if (mobileMenuToggle && sidebar) {
+                mobileMenuToggle.addEventListener('click', function () {
+                    sidebar.classList.toggle('hidden'); // Or use a class for showing/hiding
+                     // You might need more complex logic depending on how your sidebar works
+                });
+            }
+        });
+    </script>
+    @vite('resources/js/adminnavbar.js') {{-- Assuming this handles sidebar logic --}}
+</body>
+</html>

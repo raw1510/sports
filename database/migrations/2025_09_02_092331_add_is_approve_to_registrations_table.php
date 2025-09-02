@@ -11,11 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('pending_documents', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('pending_registration_id')->constrained('pendingRegistration')->onDelete('cascade');
-            $table->string('document_path');
-            $table->timestamps();
+        Schema::table('registrations', function (Blueprint $table) {
+            $table->boolean('is_Approve')->default(false);
         });
     }
 
@@ -24,6 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('pending_documents');
+        Schema::table('registrations', function (Blueprint $table) {
+            $table->dropColumn('is_Approve');
+        });
     }
 };

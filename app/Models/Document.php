@@ -11,4 +11,9 @@ class Document extends Model
         'document_path',
     ];
 
+    public function registration()
+    {
+        return $this->belongsTo(Registration::class, 'registration_id');
+    }
+
 }

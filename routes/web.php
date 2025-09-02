@@ -23,7 +23,11 @@ Route::middleware(['login'])->group(function () {
     Route::post('/logout',[LoginController::class,'logout'])->name('admin.logout');
     
     Route::middleware(['login2'])->group(function () {
-        Route::get('/admin', [adminRegister::class,'adminRegistrations'])->name('admin.registrations');
+        Route::get('/admin/approved', [adminRegister::class,'adminApprovedRegistrations'])->name('admin.registrations');
+        Route::get('/admin/pending', [adminRegister::class,'adminPendingRegistrations'])->name('admin.registrations.pending');  
+
+        Route::patch('/admin/pending/{id}/{btn}', [adminRegister::class,'acceptOrReject'])->name('admin.registrations.acceptOrReject'); 
+
         Route::get('/admin/slider',[SliderController::class,'index'])->name('admin.sidebar');
         Route::post('/admin/slider/post', [SliderController::class,'sliderPost'])->name('admin.slider.post');
         Route::post('/admin/gallery/post', [GalleryController::class,'galleryPost'])->name('admin.gallery.post');
