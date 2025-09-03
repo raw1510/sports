@@ -7,15 +7,35 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Models\ContactInquiry;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\NewInquiryMail;
 
 class ContactController extends Controller
 {
     //
     public function ContactUsFormGet()
     {
-        $inquiries = ContactInquiry::latest()->paginate(10);
-        return view('admin.AdminContactUS', compact('inquiries'));
+        $pendingInquiries = ContactInquiry::where('status', 'pending')
+            ->latest()
+            ->paginate(10);
+
+        // Fetch closed inquiries
+        $closedInquiries = ContactInquiry::where('status', 'closed')
+            ->latest()
+            ->paginate(10);
+
+        return view('admin.AdminContactUS', compact('pendingInquiries', 'closedInquiries'));
     }
+
+
+    public function closeInquiry(Request $request, $id)
+{
+    $inquiry = ContactInquiry::findOrFail($id);
+    $inquiry->status = 'closed';
+    $inquiry->save();
+
+    return redirect()->back()->with('success', 'Inquiry marked as closed.');
+}
 
 
 
@@ -45,13 +65,15 @@ class ContactController extends Controller
 
         try {
             // Save the contact inquiry to the database
-            ContactInquiry::create([
+            $inquiry = ContactInquiry::create([
                 'full_name' => $request->full_name,
                 'age' => $request->age,
                 'disability_type' => $request->disability_type,
                 'contact_number' => $request->contact_number,
                 'information_request' => $request->information_request
             ]);
+
+             Mail::to('mehtakrish1510@gmail.com')->send(new NewInquiryMail($inquiry));
 
             // Show success message
             alert()->success('Thank You!', 'Your inquiry has been submitted successfully. We will contact you soon.');

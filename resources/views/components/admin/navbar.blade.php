@@ -43,7 +43,7 @@
             </button>
             <div id="registrationDropdown" class="hidden ml-10 mt-1">
                 {{-- <a href="" class="block px-5 py-2 text-sm {{ request()->routeIs('admin.pending') ? 'bg-brown-700 border-l-4 border-amber-500 text-brown-200' : 'text-brown-200 hover:bg-brown-700' }}"> --}}
-                <a href="{{ route('admin.registrations.pending') }}" class="block px-5 py-2 text-sm 'bg-brown-700 border-l-4 border-amber-500 text-brown-200' : 'text-brown-200 hover:bg-brown-700' }}">
+                <a href="{{ route('admin.registrations.pending') }}" class="block px-5 py-2 text-sm {{ request()->routeIs('admin.registrations.pending') ? 'bg-brown-700 border-l-4 border-amber-500 text-brown-200' : 'text-brown-200 hover:bg-brown-700' }}">
                     Pending
                 </a>
                 <a href="{{ route('admin.registrations') }}" class="block px-5 py-2 text-sm {{ request()->routeIs('admin.registrations') ? 'bg-brown-700 border-l-4 border-amber-500 text-brown-200' : 'text-brown-200 hover:bg-brown-700' }}">

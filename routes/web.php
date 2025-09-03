@@ -30,7 +30,14 @@ Route::middleware(['login'])->group(function () {
 
         Route::get('/admin/slider',[SliderController::class,'index'])->name('admin.sidebar');
         Route::post('/admin/slider/post', [SliderController::class,'sliderPost'])->name('admin.slider.post');
+        Route::put('/admin/slider/set-display-order', [SliderController::class, 'setDisplayOrder'])->name('admin.slider.setDisplayOrder');
+        Route::delete('/admin/slider/{id}', [SliderController::class, 'destroy'])->name('admin.slider.destroy');
+
+
         Route::post('/admin/gallery/post', [GalleryController::class,'galleryPost'])->name('admin.gallery.post');
+
+        Route::get('/admin/contact', [ContactController::class, 'ContactUsFormGet'])->name('admin.contact.view');
+        Route::post('/admin/contact/close/{id}', [ContactController::class, 'closeInquiry'])->name('admin.contact.close');
     });
     
     
@@ -39,7 +46,6 @@ Route::middleware(['login'])->group(function () {
     
     
     
-    Route::get('/contact', [ContactController::class, 'ContactUsFormGet'])->name('admin.contact.view');
     Route::post('/contact', [ContactController::class, 'ContactUsFormPost'])->name('contact.submit');
     
     

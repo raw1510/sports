@@ -34,7 +34,8 @@ public function adminApprovedRegistrations(Request $request)
     $gameFilter = $request->get('game_filter');
     
     // Step 1: Get all registrations with optional search filtering
-    $registrationsQuery = Registration::orderBy('id', 'desc');
+    $registrationsQuery = Registration::where('is_Approve', 1) // <-- Key difference: filter for pending
+                                          ->orderBy('id', 'desc');
     
     // Apply search filter if provided
     if ($search) {
@@ -180,7 +181,7 @@ public function acceptOrReject(string $id, string $btn){
         $registration = Registration::findOrFail($id); // Or where('is_approved', 0)->findOrFail($id);
 
         if($btn == 'accept'){
-            $registration->is_approved = 1; // Make sure column name is correct
+            $registration->is_Approve = 1; // Make sure column name is correct
             $registration->save();
             return redirect()->back()->with('success','Registration Accepted');
         }

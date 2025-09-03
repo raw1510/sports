@@ -15,6 +15,7 @@ class SliderImage extends Model
         'image_path',
         'is_active',
         'order_index',
+        'display_order',
     ];
 
     // Cast attributes to native types if needed
