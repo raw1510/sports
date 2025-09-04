@@ -35,6 +35,9 @@ Route::middleware(['login'])->group(function () {
 
 
         Route::post('/admin/gallery/post', [GalleryController::class,'galleryPost'])->name('admin.gallery.post');
+        Route::post('/admin/gallery/toggle/{id}', [GalleryController::class, 'toggleStatus'])->name('admin.gallery.toggle');
+        Route::delete('/admin/gallery/{id}', [GalleryController::class, 'destroy'])->name('admin.gallery.destroy');
+
 
         Route::get('/admin/contact', [ContactController::class, 'ContactUsFormGet'])->name('admin.contact.view');
         Route::post('/admin/contact/close/{id}', [ContactController::class, 'closeInquiry'])->name('admin.contact.close');

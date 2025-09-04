@@ -23,10 +23,13 @@ class SliderController extends Controller
         $allSliderImages = SliderImage::orderBy('created_at', 'desc')->paginate(10);
         //  dd($allSliderImages);
 
-    // Fetch the CURRENTLY SELECTED images for display in the management section (optional, for context)
+    //for gallery table
+    $allGalleryImages = Gallery::orderBy('created_at', 'desc')->get(); 
+
+
 
         // Pass the data to the view
-        return view('main.slider',  compact('allSliderImages')); // Adjust view name as needed
+        return view('main.slider',  compact('allSliderImages','allGalleryImages')); // Adjust view name as needed
     }
     
 

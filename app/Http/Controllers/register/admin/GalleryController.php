@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Gallery;
 use Illuminate\Support\Facades\Validator;
 use RealRashid\SweetAlert\Facades\Alert;
+use Illuminate\Support\Facades\File;
 
 class GalleryController extends Controller
 {
@@ -80,5 +81,38 @@ class GalleryController extends Controller
             return redirect()->back()->withErrors(['gallery_error' => 'Failed to upload gallery image. Please try again.'])->withInput();
         }
     }
+
+
+    public function toggleStatus($id)
+{
+    $gallery = Gallery::findOrFail($id);
+    $gallery->is_active = !$gallery->is_active; // flip 0->1 or 1->0
+    $gallery->save();
+
+    return response()->json([
+        'success' => true,
+        'status' => $gallery->is_active ? 'Active' : 'Inactive',
+    ]);
+}
+
+
+
+public function destroy($id)
+{
+    $gallery = Gallery::findOrFail($id);
+
+    // Get full path of the image
+    $imagePath = public_path($gallery->image_path);
+
+    // Delete physical file if exists
+    if (File::exists($imagePath)) {
+        File::delete($imagePath);
+    }
+
+    // Delete DB row
+    $gallery->delete();
+
+    return response()->json(['success' => true, 'message' => 'Gallery item deleted successfully.']);
+}
 
 }
