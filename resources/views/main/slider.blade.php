@@ -173,7 +173,7 @@
 
                                 @if(isset($allSliderImages) && $allSliderImages->isNotEmpty())
                                 <div class="overflow-x-auto">
-                                    <table class="min-w-full divide-y divide-brown-200">
+                                    <table id="slider-table" class="min-w-full divide-y divide-brown-200">
                                         <thead class="bg-brown-50">
                                             <tr>
                                                 <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-brown-700 uppercase tracking-wider">Image</th>
@@ -202,16 +202,16 @@
     </td>
     <td class="px-4 py-3 whitespace-nowrap text-sm text-brown-700 flex flex-wrap items-center gap-2">
         <!-- Display Order Dropdown -->
-        <select name="display_order[{{ $image->id }}]" class="display-order-select block w-full pl-3 pr-10 py-2 text-base border-brown-300 focus:outline-none focus:ring-brown-500 focus:border-brown-500 sm:text-sm rounded-md flex-grow">
+        <select name="display_order[{{ $image->id }}]"
+                class="display-order-select block w-full pl-3 pr-10 py-2 text-base border-brown-300 focus:outline-none focus:ring-brown-500 focus:border-brown-500 sm:text-sm rounded-md flex-grow"
+                data-id="{{ $image->id }}"> <!-- data-id is useful -->
             <option value="">Not Selected</option>
             <option value="1" >Position 1</option>
             <option value="2" >Position 2</option>
             <option value="3" >Position 3</option>
         </select>
-
-        <!-- Delete Button using <a> tag with JavaScript -->
-        
     </td>
+
     <td class="px-4 py-3 whitespace-nowrap">
         <a href="#" class="inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded shadow-sm text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
            data-id="{{ $image->id }}"
@@ -307,6 +307,8 @@
                             </div>
                         </div>
                     </div>
+
+
                 </div>
             </main>
         </div>
@@ -317,6 +319,107 @@
     @vite('resources/js/adminnavbar.js')
 
 <script>
+
+//dropdown js to prevent further choosing
+function updateSelectionUI() {
+    const selects = document.querySelectorAll('#slider-table .display-order-select');
+    let selectedPositions = new Set(); // Keep track of which positions are taken
+
+    // Loop through all dropdowns and check their current values
+    selects.forEach(select => {
+        const value = select.value;
+        if (value !== '' && value !== '0') { // If it's not "Not Selected"
+            selectedPositions.add(value);
+        }
+    });
+
+    // Disable any dropdown that could potentially lead to more than 3 selections
+    selects.forEach(select => {
+        const currentValue = select.value;
+        const selectId = select.getAttribute('data-id');
+
+        // Only disable if this dropdown isn't already selected and there are already 3 selections
+        if (currentValue === '' || currentValue === '0') {
+            // Check if there are already 3 selections
+            if (selectedPositions.size >= 3) {
+                select.disabled = true;
+            } else {
+                select.disabled = false; // Enable it if less than 3 selections exist
+            }
+        }
+    });
+}
+
+// Listen for changes in the dropdowns
+document.addEventListener('DOMContentLoaded', function () {
+    const selects = document.querySelectorAll('#slider-table .display-order-select');
+    
+    // Initialize the UI state when the page loads
+    updateSelectionUI();
+
+    // Listen for changes in any dropdown
+    selects.forEach(select => {
+        select.addEventListener('change', function () {
+            // Re-evaluate the UI state after a change
+            updateSelectionUI();
+        });
+    });
+});
+
+function updateSelectionUI() {
+    // 1. Find all relevant dropdowns
+    const selects = document.querySelectorAll('#slider-table .display-order-select');
+    // 2. Create a set to hold currently selected positions (1, 2, 3)
+    let selectedPositions = new Set();
+
+    // 3. Check each dropdown to see what's currently selected
+    selects.forEach(select => {
+        const value = select.value;
+        // If a valid position is selected (not empty string)
+        if (value === '1' || value === '2' || value === '3') {
+             selectedPositions.add(value);
+        }
+    });
+
+    // 4. Determine if the limit of 3 selections is reached
+    const isLimitReached = selectedPositions.size >= 3;
+
+    // 5. Update the state of each dropdown
+    selects.forEach(select => {
+        const currentValue = select.value;
+
+        if (currentValue === '1' || currentValue === '2' || currentValue === '3') {
+            // If this dropdown IS currently selected, it should remain enabled
+            // so the user can change or deselect it.
+            select.disabled = false;
+        } else {
+            // If this dropdown is NOT currently selected (i.e., "Not Selected"),
+            // its state depends on whether the limit is reached.
+            select.disabled = isLimitReached;
+        }
+    });
+}
+
+
+// Listen for changes in the dropdowns and initialize the UI
+document.addEventListener('DOMContentLoaded', function () {
+    // 1. Find all relevant dropdowns
+    const selects = document.querySelectorAll('#slider-table .display-order-select');
+
+    // 2. Initialize the UI state when the page loads based on pre-selected values
+    updateSelectionUI(); // Run once on load
+
+    // 3. Add a 'change' event listener to each dropdown
+    selects.forEach(select => {
+        select.addEventListener('change', function () {
+            // 4. Whenever a dropdown changes, re-run the update function
+            updateSelectionUI();
+        });
+    });
+});
+
+
+//delete ajax
 function confirmDelete(event, imageId) {
     event.preventDefault();
 
