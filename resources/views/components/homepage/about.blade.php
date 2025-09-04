@@ -9,7 +9,7 @@
           <div>
             <picture>
               <source srcset="{{ asset('images/about.webp') }}" type="image/webp">
-              <img src="{{ asset('images/about.webp') }}" alt="PCI Team" class="rounded-lg shadow-lg w-full object-cover hover:shadow-xl transition-shadow duration-300" loading="lazy" decoding="async">
+              <img src="{{ asset('images/about.webp') }}" alt="PCI Team" class="rounded-lg w-full object-cover hover:shadow-xl transition-shadow duration-300" loading="lazy" decoding="async">
 
             </picture>
           </div>

@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <meta name="description" content="Paralympic Committee of India — empowering para athletes and sharing news, events and athletes information." />
   
-  
+  <meta name="csrf-token" content="{{ csrf_token() }}">
   <title>@yield('title')</title>
   @vite(['resources/css/app.css', 'resources/js/app.js'])
   @include('sweetalert::alert')

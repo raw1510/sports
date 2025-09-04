@@ -120,9 +120,10 @@
                                                         <p class="mb-2 text-sm text-brown-500"><span class="font-semibold">Click to upload</span> or drag and drop</p>
                                                         <p class="text-xs text-brown-500">PNG, JPG, GIF, WebP up to 5MB</p>
                                                     </div>
-                                                    <input type="file" id="slider_image" name="image" class="hidden" required />
+                                                    <input type="file" id="slider_image" name="image" class="hidden file-input-trigger" required accept="image/*"/>
                                                 </label>
                                             </div>
+                                            <p id="slider-file-name" class="mt-1 text-sm text-brown-600 italic">No file chosen</p>
                                             @error('image')
                                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                                             @enderror
@@ -284,9 +285,10 @@
                                                         <p class="mb-2 text-sm text-brown-500"><span class="font-semibold">Click to upload</span> or drag and drop</p>
                                                         <p class="text-xs text-brown-500">PNG, JPG, GIF, WebP up to 5MB</p>
                                                     </div>
-                                                    <input type="file" id="gallery_image" name="gallery_image" class="hidden" required />
+                                                    <input type="file" id="gallery_image" name="gallery_image" class="hidden file-input-trigger" required />
                                                 </label>
                                             </div>
+                                            <p id="gallery-file-name" class="mt-1 text-sm text-brown-600 italic">No file chosen</p>
                                             @error('gallery_image')
                                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                                             @enderror
@@ -523,6 +525,41 @@ document.addEventListener('click', function (event) {
             });
         });
 
+
+
+
+
+
+////////////////////slider 
+
+
+
+
+document.addEventListener("DOMContentLoaded", function () {
+    // Gallery input
+    const galleryInput = document.getElementById("gallery_image");
+    const galleryFileName = document.getElementById("gallery-file-name");
+
+    galleryInput.addEventListener("change", function () {
+        if (galleryInput.files.length > 0) {
+            galleryFileName.textContent = galleryInput.files[0].name;
+        } else {
+            galleryFileName.textContent = "No file chosen";
+        }
+    });
+
+    // Slider input
+    const sliderInput = document.getElementById("slider_image");
+    const sliderFileName = document.getElementById("slider-file-name");
+
+    sliderInput.addEventListener("change", function () {
+        if (sliderInput.files.length > 0) {
+            sliderFileName.textContent = sliderInput.files[0].name;
+        } else {
+            sliderFileName.textContent = "No file chosen";
+        }
+    });
+});
 
 
 

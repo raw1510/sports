@@ -2,26 +2,38 @@
     <h2 class="text-3xl font-bold text-center text-gray-800 mb-8">Gallery</h2>
 
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        @forelse($galleries as $gallery)
-            <div class="bg-white rounded-lg shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden group gallery-card">
-                <div class="relative overflow-hidden">
-                    <img src="{{ asset($gallery->image_path) }}" 
-                         alt="{{ $gallery->title ?: 'Gallery Image' }}" 
-                         class="w-full h-56 object-cover group-hover:scale-105 transition-transform duration-300">
-                    <div class="absolute inset-0 bg-amber-900/0 group-hover:bg-amber-900/10 transition-colors duration-300"></div>
-                </div>
-                <div class="p-4">
-                    <p class="text-sm text-gray-600 group-hover:text-amber-800 transition-colors duration-200">
-                        {{ $gallery->title ?? $gallery->description ?? 'Gallery Image' }}
+    @forelse($galleries as $gallery)
+        <div class="bg-white rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden group gallery-card border border-gray-100">
+            <!-- Image Section -->
+            <div class="relative overflow-hidden">
+                <img src="{{ asset($gallery->image_path) }}" 
+                     alt="{{ $gallery->title ?: 'Gallery Image' }}" 
+                     class="w-full h-56 object-cover group-hover:scale-105 transition-transform duration-500">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/40 via-black/10 to-transparent"></div>
+            </div>
+
+            <!-- Content Section -->
+            <div class="p-5 space-y-2">
+                <!-- Title -->
+                <h3 class="text-lg font-semibold text-gray-800 group-hover:text-amber-700 transition-colors duration-200">
+                    {{ $gallery->title ?: 'Untitled Achievement' }}
+                </h3>
+
+                <!-- Description -->
+                @if($gallery->description)
+                    <p class="text-sm text-gray-600 leading-relaxed">
+                        {{ $gallery->description }}
                     </p>
-                </div>
+                @endif
             </div>
-        @empty
-            <div class="col-span-full text-center py-12">
-                <p class="text-gray-500">No gallery images available yet.</p>
-            </div>
-        @endforelse
-    </div>
+        </div>
+    @empty
+        <div class="col-span-full text-center py-12">
+            <p class="text-gray-500 text-lg">No gallery images available yet.</p>
+        </div>
+    @endforelse
+</div>
+
 </div>
 
 <style>

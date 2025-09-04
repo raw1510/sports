@@ -16,7 +16,11 @@ class HomepageController extends Controller
         $sliderImages = SliderImage::whereNotNull('display_order')
                            ->orderBy('display_order', 'asc')
                            ->get();
-        $galleries = Gallery::orderBy('created_at', 'desc')->take(6)->get();
+        
+        $galleries = Gallery::where('is_active', 1)
+                            ->orderBy('created_at', 'desc')
+                            ->get();
+                            // dd($galleries); 
 
         // Pass the data to the view
         return view('main.main', compact('sliderImages','galleries')); // Adjust view name as needed
