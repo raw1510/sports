@@ -202,58 +202,38 @@
                         </div>
 
                         <div class="px-4 sm:px-6 py-4 border-t border-brown-100 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
-                            <div class="text-sm text-brown-500">
+                            {{-- <div class="text-sm text-brown-500">
                                 Showing {{ $registrations->firstItem() }} to {{ $registrations->lastItem() }} of {{ $registrations->total() }} results
-                            </div>
-                            <div class="flex space-x-2 justify-center sm:justify-end">
-                                <!-- Custom Styled Pagination -->
-                                @if ($registrations->hasPages())
-                                    <nav role="navigation" aria-label="Pagination Navigation" class="flex items-center justify-between">
-                                        <div class="flex items-center gap-1">
-                                            {{-- Previous Page Link --}}
-                                            @if ($registrations->onFirstPage())
-                                                <span class="px-3 py-1 rounded-md bg-brown-100 text-brown-400 cursor-not-allowed text-sm">
-                                                    Previous
-                                                </span>
-                                            @else
-                                                <a href="{{ $registrations->previousPageUrl() }}" class="px-3 py-1 rounded-md bg-brown-100 text-brown-700 hover:bg-brown-200 transition-colors text-sm">
-                                                    Previous
-                                                </a>
-                                            @endif
+                            </div> --}}
+                            <div>
+    @if ($registrations->hasPages())
+        <nav class="flex items-center gap-1">
+            {{-- Previous --}}
+            @if ($registrations->onFirstPage())
+                <span class="px-3 py-1 rounded-md bg-brown-100 text-brown-400 text-sm">Previous</span>
+            @else
+                <a href="{{ $registrations->previousPageUrl() }}" class="px-3 py-1 rounded-md bg-brown-100 text-brown-700 hover:bg-brown-200 text-sm">Previous</a>
+            @endif
 
-                                            {{-- Pagination Elements --}}
-                                            @foreach ($registrations->links()->elements as $element)
-                                                {{-- "Three Dots" Separator --}}
-                                                @if (is_string($element))
-                                                    <span class="px-3 py-1 rounded-md bg-brown-50 text-brown-500 text-sm">{{ $element }}</span>
-                                                @endif
+            {{-- Page Numbers --}}
+            @foreach ($registrations->getUrlRange(1, $registrations->lastPage()) as $page => $url)
+                @if ($page == $registrations->currentPage())
+                    <span class="px-3 py-1 rounded-md bg-brown-600 text-white text-sm">{{ $page }}</span>
+                @else
+                    <a href="{{ $url }}" class="px-3 py-1 rounded-md bg-brown-100 text-brown-700 hover:bg-brown-200 text-sm">{{ $page }}</a>
+                @endif
+            @endforeach
 
-                                                {{-- Array Of Links --}}
-                                                @if (is_array($element))
-                                                    @foreach ($element as $page => $url)
-                                                        @if ($page == $registrations->currentPage())
-                                                            <span class="px-3 py-1 rounded-md bg-brown-600 text-white text-sm">{{ $page }}</span>
-                                                        @else
-                                                            <a href="{{ $url }}" class="px-3 py-1 rounded-md bg-brown-100 text-brown-700 hover:bg-brown-200 transition-colors text-sm">{{ $page }}</a>
-                                                        @endif
-                                                    @endforeach
-                                                @endif
-                                            @endforeach
+            {{-- Next --}}
+            @if ($registrations->hasMorePages())
+                <a href="{{ $registrations->nextPageUrl() }}" class="px-3 py-1 rounded-md bg-brown-100 text-brown-700 hover:bg-brown-200 text-sm">Next</a>
+            @else
+                <span class="px-3 py-1 rounded-md bg-brown-100 text-brown-400 text-sm">Next</span>
+            @endif
+        </nav>
+    @endif
+</div>
 
-                                            {{-- Next Page Link --}}
-                                            @if ($registrations->hasMorePages())
-                                                <a href="{{ $registrations->nextPageUrl() }}" class="px-3 py-1 rounded-md bg-brown-100 text-brown-700 hover:bg-brown-200 transition-colors text-sm">
-                                                    Next
-                                                </a>
-                                            @else
-                                                <span class="px-3 py-1 rounded-md bg-brown-100 text-brown-400 cursor-not-allowed text-sm">
-                                                    Next
-                                                </span>
-                                            @endif
-                                        </div>
-                                    </nav>
-                                @endif
-                            </div>
                         </div>
                     </div>
                 </div>

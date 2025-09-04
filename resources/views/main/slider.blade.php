@@ -285,7 +285,7 @@
                                                         <p class="mb-2 text-sm text-brown-500"><span class="font-semibold">Click to upload</span> or drag and drop</p>
                                                         <p class="text-xs text-brown-500">PNG, JPG, GIF, WebP up to 5MB</p>
                                                     </div>
-                                                    <input type="file" id="gallery_image" name="gallery_image" class="hidden file-input-trigger" required />
+                                                    <input type="file" id="gallery_image" name="gallery_image" class="hidden file-input-trigger" required accept="image/*" />
                                                 </label>
                                             </div>
                                             <p id="gallery-file-name" class="mt-1 text-sm text-brown-600 italic">No file chosen</p>
